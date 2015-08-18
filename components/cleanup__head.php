@@ -1,5 +1,5 @@
 <?php
-function wptc__head_cleanup(){
+function wpctb__head_cleanup(){
 	// category feeds
 	remove_action( 'wp_head', 'feed_links_extra', 3 );
 	// post and comment feeds
@@ -29,4 +29,4 @@ function wptc__head_cleanup(){
 	// clean up gallery output in wp
 	add_filter( 'gallery_style', 'bones_gallery_style' );
 }
-add_action( 'init', 'wptc__head_cleanup' );
+add_action( 'init', 'wpctb__head_cleanup' );

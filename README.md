@@ -1,4 +1,4 @@
-# WP Boilerplate for Child Themes
+# WP Boilerplate for Child Themes v0.1.01-beta
 
 This is a full-featured child theme boilerplate to start with.
 

@@ -7,9 +7,9 @@ add_filter( 'the_content', 'bones_filter_ptags_on_images' );
 
 // custom excerpt-more
 /*
-function wptc__excerpt_more( $text ){
+function wpctb__excerpt_more( $text ){
 	// $text = 'whatever';
 	return $text;
 }
-add_filter( 'excerpt_more', 'wptc__excerpt_more' );
+add_filter( 'excerpt_more', 'wpctb__excerpt_more' );
 */

@@ -3,7 +3,7 @@
 
 // http://plugins.svn.wordpress.org/html5shiv/tags/3.7.2.1/html5shiv.php
 // The latest HTML5 JavaScript shiv for IE to recognise and style the HTML5 elements
-function wptc__html5shiv_cdn() {
+function wpctb__html5shiv_cdn() {
 		wp_deregister_script( 'respond' );
 		wp_deregister_script( 'html5shiv' );
 		wp_deregister_script( 'html5shiv-printshiv' );
@@ -13,7 +13,7 @@ function wptc__html5shiv_cdn() {
 		wp_enqueue_script( 'html5shiv-printshiv', '//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js', array(), '', false );
 }
 if( ! is_admin() ){
-	add_action( 'wp_enqueue_scripts', 'wptc__html5shiv_cdn' );
+	add_action( 'wp_enqueue_scripts', 'wpctb__html5shiv_cdn' );
 }
 
 // better idea is targetting the browsers (lt IE 9)

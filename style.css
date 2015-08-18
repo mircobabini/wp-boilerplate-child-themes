@@ -6,6 +6,7 @@
 	Author URI:   http://sedweb.it
 	Template:     parent
 	Version:      1.0.0
+	WPCTBv.:      0.1.01-beta
 	Text Domain:  sedweb
 
 	Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
@@ -16,6 +17,7 @@
 @import url("../parent/style.css");
 
 /* don't write css here. use the assets folder instead. */
-/* this boilerplate uses the mobile-first approach for css: http://www.zell-weekeat.com/how-to-write-mobile-first-css/ */
+/* this boilerplate uses the mobile-first approach for css. */
+/* read more: http://www.zell-weekeat.com/how-to-write-mobile-first-css/ */
 
 

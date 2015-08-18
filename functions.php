@@ -1,15 +1,15 @@
 <?php
 show_admin_bar( false );
 
-define( 'WPTC__DEBUG', true );
+define( 'WPCTB__DEBUG', true );
 
-define( 'WPTC__BOILERPLATE_PATH', dirname(__FILE__) );
-define( 'WPTC__BOILERPLATE_ASSETS', get_stylesheet_directory_uri() );
+define( 'WPCTB__BOILERPLATE_PATH', dirname(__FILE__) );
+define( 'WPCTB__BOILERPLATE_ASSETS', get_stylesheet_directory_uri() );
 
 require_once 'functions-others.php';
 if( is_admin() ){ require_once 'function-admin.php'; }
 
-function wptc__init(){
+function wpctb__init(){
 	add_editor_style( get_stylesheet_directory_uri() . '/library/css/editor-style.css' );
 
 	// setup components
@@ -35,7 +35,7 @@ function wptc__init(){
 		list( $filepath, $active );
 
 		if( $active ){
-			require WPTC__BOILERPLATE_PATH.$filepath;
+			require WPCTB__BOILERPLATE_PATH.$filepath;
 		}
 	}
 }

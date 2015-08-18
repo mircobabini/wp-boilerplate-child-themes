@@ -168,8 +168,8 @@ wp_set_auth_cookie( $user_id );
 add_filter( 'wp_mail_content_type', function(){ return 'text/html'; });
 
 // change logo to the admin login page
-add_action( 'login_head', 'wptc__admin_login_logo');
-function wptc__admin_login_logo(){
+add_action( 'login_head', 'wpctb__admin_login_logo');
+function wpctb__admin_login_logo(){
 	?>
 	<style type="text/css">
 		h1 a {
@@ -189,15 +189,15 @@ add_action( 'init', function(){
 } );
 
 // change admin credits
-add_filter( 'admin_footer_text', 'wptc__admin_footer_text' );
-function wptc__admin_footer_text( $default_text ) {
+add_filter( 'admin_footer_text', 'wpctb__admin_footer_text' );
+function wpctb__admin_footer_text( $default_text ) {
 	return '<span id="footer-thankyou">Powered by <a href="http://sedweb.it">SED Web</a><span>';
 }
 
 // OPTIMIZATIONS / SECURITY
 // remove or limit revisions
 // example: define( 'WP_POST_REVISIONS', false );
-define( 'WP_POST_REVISIONS', WPTC__DEBUG ? 20 : 5 );
+define( 'WP_POST_REVISIONS', WPCTB__DEBUG ? 20 : 5 );
 
 // remove elements from the header: http://www.smashingmagazine.com/2011/12/10-tips-optimize-wordpress-theme/#remove-elements-from-the-header
 
