@@ -1,9 +1,11 @@
-# WP Boilerplate for Child Themes v0.1.01-beta
+# WP Boilerplate for Child Themes
 
 This is a full-featured child theme boilerplate to start with.
 
 ## Author
 Mirco Babini <mirkolofio@gmail.com> for [SED Web](http://sedweb.it)
+
+Latest version: v0.1.01-beta
 
 ## Website
 <http://sedweb.it>
