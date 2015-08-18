@@ -9,6 +9,36 @@ RewriteRule . /index.php [L]
 </IfModule>
 # END WordPress
 
+# turn off TRACE method to avoid HTTP Trace attack (XST)
+<IfModule mod_rewrite.c>
+RewriteCond %{REQUEST_METHOD} ^TRACE
+RewriteRule .* - [F]
+</IfModule>
+
+# avoid query string exploits (NEEDS TESTS)
+RewriteCond %{QUERY_STRING} ../    [NC,OR]
+RewriteCond %{QUERY_STRING} boot.ini [NC,OR]
+RewriteCond %{QUERY_STRING} tag=     [NC,OR]
+RewriteCond %{QUERY_STRING} ftp:     [NC,OR]
+RewriteCond %{QUERY_STRING} http:    [NC,OR]
+RewriteCond %{QUERY_STRING} https:   [NC,OR]
+RewriteCond %{QUERY_STRING} mosConfig [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*([|]|(|)||'|"|;|?|*).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(%22|%27|%3C|%3E|%5C|%7B|%7C).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(%0|%A|%B|%C|%D|%E|%F|127.0).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(globals|encode|config|localhost|loopback).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(request|select|insert|union|declare|drop).* [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+# avoid posting through proxies, courtesy of perishablepress.com
+<IfModule mod_rewrite.c>
+RewriteCond %{REQUEST_METHOD} =POST
+RewriteCond %{HTTP:VIA}%{HTTP:FORWARDED}%{HTTP:USERAGENT_VIA}%{HTTP:X_FORWARDED_FOR}%{HTTP:PROXY_CONNECTION} !^$ [OR]
+RewriteCond %{HTTP:XPROXY_CONNECTION}%{HTTP:HTTP_PC_REMOTE_ADDR}%{HTTP:HTTP_CLIENT_IP} !^$
+RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+RewriteRule .* - [F,NS,L]
+</IfModule>
+
 # http://www.askapache.com/htaccess/htaccess.html
 ServerSignature Off
 SetEnv SERVER_ADMIN it@sedweb.it

@@ -13,3 +13,11 @@ function wpctb__excerpt_more( $text ){
 }
 add_filter( 'excerpt_more', 'wpctb__excerpt_more' );
 */
+
+// needs tests
+
+// hide hard urls, use relative ones
+// https://gist.github.com/wycks/2315279
+
+// Rewrite static theme assets and plugins directory (WordPress)
+// https://gist.github.com/wycks/2315295
