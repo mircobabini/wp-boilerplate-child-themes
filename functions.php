@@ -21,8 +21,8 @@ function wpctb__init(){
 		'assets__init'       => array( 'assets/init.php', true ),
 		'assets__init-admin' => array( 'assets/init-admin.php', is_admin() ),
 
-		'enhance__html5shiv' => array( 'components/enhance__html5shiv-cdn.php', false ),
-		'enhance__jquery'    => array( 'components/enhance__jquery-cdn.php', true ),
+		'enhance__ltie9support' => array( 'components/enhance__ltie9support.php', false ),
+		'enhance__jquery'       => array( 'components/enhance__jquery-cdn.php', true ),
 
 		'security'         => array( 'components/security.php', false ),
 		'cleanup__head'    => array( 'components/cleanup__head.php', false ),
