@@ -1,3 +1,5 @@
+# todo: integrate https://github.com/roots/wp-h5bp-htaccess
+
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On

@@ -15,15 +15,16 @@ function wpctb__init(){
 	// setup components
 	$components = array(
 		/* keys are just for components legibility */
-		'assets__init'       => array( 'assets/init.php', true ),
-		'assets__init-admin' => array( 'assets/init-admin.php', is_admin() ),
-
 		'debug'        => array( 'components/debug.php', false ),
 		'debug__utils' => array( 'components/debug__utils.php', false ),
+
+		'assets__init'       => array( 'assets/init.php', true ),
+		'assets__init-admin' => array( 'assets/init-admin.php', is_admin() ),
 
 		'enhance__html5shiv' => array( 'components/enhance__html5shiv-cdn.php', false ),
 		'enhance__jquery'    => array( 'components/enhance__jquery-cdn.php', true ),
 
+		'security'         => array( 'components/security.php', false ),
 		'cleanup__head'    => array( 'components/cleanup__head.php', false ),
 		'cleanup__various' => array( 'components/cleanup__various.php', false ),
 
