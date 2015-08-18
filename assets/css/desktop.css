@@ -1,0 +1,11 @@
+/* Mobile first queries */
+/*   for smaller devices see: mobile.css */
+
+@media only screen and (min-width: 992px) { /* horizontal tablets & small desktops */
+	/* we are the only one using this size, but we agreed it's good enough */
+	/* if you are in doubts, use the min-width: 1030px */
+}
+@media only screen and (min-width: 1030px) { /* normal desktops */
+}
+@media only screen and (min-width: 1240px){ /* mega sized monitors */
+}
