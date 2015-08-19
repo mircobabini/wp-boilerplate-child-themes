@@ -41,6 +41,24 @@ RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-inc
 RewriteRule .* - [F,NS,L]
 </IfModule>
 
+# Enable caching
+<IfModule mod_expires.c>
+ExpiresActive On
+
+ExpiresByType text/css "access 2 days"
+ExpiresByType text/x-javascript "access 2 days"
+
+ExpiresByType image/jpg "access 1 year"
+ExpiresByType image/jpeg "access 1 year"
+ExpiresByType image/gif "access 1 year"
+ExpiresByType image/png "access 1 year"
+ExpiresByType application/pdf "access 1 year"
+ExpiresByType application/x-shockwave-flash "access 1 year"
+ExpiresByType image/x-icon "access 1 year"
+
+ExpiresDefault "access 2 days"
+</IfModule>
+
 # http://www.askapache.com/htaccess/htaccess.html
 ServerSignature Off
 SetEnv SERVER_ADMIN it@sedweb.it

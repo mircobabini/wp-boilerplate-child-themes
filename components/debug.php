@@ -1,5 +1,15 @@
 <?php
 // debug constants and settings
+function wp_debug__( $bool ){
+	define( 'WP_DEBUG', $bool );
+
+	if( ! WP_DEBUG ){
+		wp_debug__log( false );
+		wp_debug__display( false );
+	}
+
+	return WP_DEBUG;
+}
 function wp_debug__log( $bool, $file = null ){
 	@ini_set( 'log_errors', $bool ? 'On' : 'Off' );
 	define( 'WP_DEBUG_LOG', $bool );
@@ -15,10 +25,9 @@ function wp_debug__display( $bool ){
 }
 
 /* WordPress debug mode for developers. */
-define( 'WP_DEBUG', false );
-{
-	wp_debug__log( false, dirname(__FILE__).'/wptc-errors.log' );
-	wp_debug__display( true );
+if( wp_debug__( true ) ){
+	wp_debug__log( true, dirname(__FILE__).'/wpctb-errors.log' );
+	wp_debug__display( false );
 }
 
 // load non-minified version of wp core assets
