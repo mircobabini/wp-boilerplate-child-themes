@@ -29,6 +29,9 @@ function wpctb__init(){
 		'cleanup__various' => array( 'components/cleanup__various.php', false ),
 
 		'i18n/l10n'        => array( 'components/i18n.php', false ),
+
+		'plugin__wpthumb'        => array( 'plugins/wp-thumb/wpthumb.php', false ),
+		'plugin__wpmobiledetect' => array( 'plugins/wp-mobile-detect/wp-mobile-detect.php', false ),
 	);
 
 	// load components
