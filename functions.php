@@ -1,7 +1,9 @@
 <?php
-show_admin_bar( false );
+// check setup
+( ! defined( 'WPCTB__CONFIG' ) ) &&
+	return wpctb__setup_error();
 
-define( 'WPCTB__DEBUG', true );
+show_admin_bar( false );
 
 define( 'WPCTB__BOILERPLATE_PATH', dirname(__FILE__) );
 define( 'WPCTB__BOILERPLATE_ASSETS', get_stylesheet_directory_uri() );
@@ -15,8 +17,7 @@ function wpctb__init(){
 	// setup components
 	$components = array(
 		/* keys are just for components legibility */
-		'debug'        => array( 'components/debug.php', false ),
-		'debug__utils' => array( 'components/debug__utils.php', false ),
+		'debug' => array( 'components/debug.php', false ),
 
 		'assets__init'       => array( 'assets/init.php', true ),
 		'assets__init-admin' => array( 'assets/init-admin.php', is_admin() ),

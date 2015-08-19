@@ -194,74 +194,12 @@ function wpctb__admin_footer_text( $default_text ) {
 	return '<span id="footer-thankyou">Powered by <a href="http://sedweb.it">SED Web</a><span>';
 }
 
-// OPTIMIZATIONS / SECURITY
-// remove or limit revisions
-// example: define( 'WP_POST_REVISIONS', false );
-define( 'WP_POST_REVISIONS', WPCTB__DEBUG ? 20 : 5 );
-
-// remove elements from the header: http://www.smashingmagazine.com/2011/12/10-tips-optimize-wordpress-theme/#remove-elements-from-the-header
-
-// force perfect jpg images (compression set to 100% instead of 90% i.e. no compression at all)
-// someone said that with 80%/85% you may not even notice the difference
-// after changing, consider using Regenerate Thumbnails plugin to affect even old images
-add_filter( 'jpeg_quality', function(){ return 100; } );
-add_filter( 'wp_editor_set_quality', function(){ return 100; } );
-
-// add_filter( 'jpeg_quality', create_function( '', 'return 100;' ) );
-// add_filter( 'jpeg_quality', array( 'Returnable', '__return_int_100' ) );
-
-class Returnable{
-	public static function __callStatic( $methodname, $args = array() ){
-		$marker = '__return_';
-		if( ! substr( $methodname, 0, strlen($marker) ) == $marker ){
-			trigger_error( 'Invalid method name Returnable::'.$methodname, E_USER_ERROR );
-			return;
-		}
-
-		$rawvalue = substr( $methodname, strlen($marker) );
-
-		$stems = explode( '_', $rawvalue, 2 );
-		switch( count( $stems ) ){
-			case 2:
-				list( $cast, $value ) = $stems;
-				break;
-			case 1:
-				$value = reset( $stems );
-				break;
-		}
-
-		$valid_casts = array( 'bool', 'float', 'int' );
-		if( ! $cast || ! in_array( $cast, $valid_casts ) ){
-			return $value;
-		}
-
-		$coercion = "{$cast}val";
-		return $coercion( $value );
-	}
-}
-
-/* from: http://www.askapache.com/wordpress/advanced-wp-config-php-tweaks.html */
 /**#@+
  * DEBUGGING STUFF
  */
-/** display of notices during development. if false, error_reporting is E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR otherwise E_ALL */
-!defined('WP_DEBUG') && define('WP_DEBUG', false);
-
-/** The SAVEQUERIES definition saves the database queries to a array and that array can be displayed to help analyze those queries.
- *  The information saves each query, what function called it, and how long that query took to execute.  */
-!defined('SAVE_QUERIES') && define('SAVE_QUERIES', WP_DEBUG);
-
 !defined('ACTION_DEBUG') && define('ACTION_DEBUG', WP_DEBUG);
-
 /** This will allow you to edit the scriptname.dev.js files in the wp-includes/js and wp-admin/js directories.  */
 !defined('SCRIPT_DEBUG') && define('SCRIPT_DEBUG', WP_DEBUG);
-
-/** Add define('WP_DEBUG_LOG', true); to enable php debug logging to WP_CONTENT_DIR/debug.log */
-//!defined('WP_DEBUG_LOG') && define('WP_DEBUG_LOG', true);
-
-/** This determines whether errors should be printed to the screen as part of the output or if they should be hidden from the user.
- *  Add define('WP_DEBUG_DISPLAY', false); to wp-config.php to use the globally configured setting for display_errors and not force it to On */
-!defined('WP_DEBUG_DISPLAY') && define('WP_DEBUG_DISPLAY', false);
 
 // + secure your keys
 // https://api.wordpress.org/secret-key/1.1/
