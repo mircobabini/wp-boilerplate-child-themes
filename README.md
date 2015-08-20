@@ -5,7 +5,7 @@ This is a full-featured child theme boilerplate to start with.
 ## Author
 Mirco Babini <mirkolofio@gmail.com> for [SED Web](http://sedweb.it)
 
-Latest version: v0.1.11-beta
+Latest version: v0.1.13-beta
 
 ## Website
 <http://sedweb.it>
@@ -42,11 +42,14 @@ This configuration already supports: browser caching, gzip compression. We also 
 - Others: ...
 
 #### Thanks
-- https://github.com/ahmadawais/_child
-- https://github.com/eddiemachado/bones/
-- http://www.wpexplorer.com/
-- https://gist.github.com/LuXDAmore/
-- check into the code, there are a lot of references
+- [_child](https://github.com/ahmadawais/_child)
+- [bones](https://github.com/eddiemachado/bones/)
+- [WP Explorer](http://www.wpexplorer.com/)
+- [WP jQuery Plus](https://wordpress.org/plugins/wp-jquery-plus/)
+- [WP Mobile Detect](https://wordpress.org/plugins/wp-mobile-detect/)
+- [WP Thumb](https://wordpress.org/plugins/wp-thumb/)
+- [Luca Iaconelli](https://gist.github.com/LuXDAmore/)
+- check into the code for more references
 
 #### License? WTFPL
 ![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-strip.jpg)
