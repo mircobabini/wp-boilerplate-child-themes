@@ -1,4 +1,7 @@
 <?php
+// prepare script.js requirements
+global $scriptjs_requires;
+$scriptjs_requires = array( 'jquery' );
 
 function wpctb__import_parent_style(){
 	$parent = 'parent';
@@ -25,7 +28,8 @@ function wpctb__register_assets(){
 	// - the wp_enqueue_script 4th parameter is the 'place_in_footer' boolean
 
 	// let's start
-	wp_register_script( 'wpctb__scriptjs', WPCTB__BOILERPLATE_ASSETS.'/js/script.js', array('jquery'), $VERSION_JS, true );
+	global $scriptjs_requires;
+	wp_register_script( 'wpctb__scriptjs', WPCTB__BOILERPLATE_ASSETS.'/js/script.js', $scriptjs_requires, $VERSION_JS, true );
 
 	// this boilerplate uses the mobile-first approach for css.
 	// it's cool because: http://www.zell-weekeat.com/how-to-write-mobile-first-css/

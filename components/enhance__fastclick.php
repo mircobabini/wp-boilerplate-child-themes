@@ -1,9 +1,15 @@
 <?php
 function wpctb__register_fastclick() {
-	// wp_deregister_script( 'fastclick' );
+	$handle = 'fastclick';
 
+	if( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ){
+		return;
+	}
+
+	global $scriptjs_requires;
+	$scriptjs_requires[] = $handle;
 	// check the latest available version http://cdnjs.com/libraries/fastclick
-	wp_register_script( 'fastclick', 'https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick'.COND_EXT_JS, false, null);
+	wp_register_script( $handle, 'https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick'.COND_EXT_JS, false, null);
 }
 function wpctb__enqueue_fastclick() {
 	wp_enqueue_script( 'fastclick' );
