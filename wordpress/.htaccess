@@ -2,19 +2,30 @@
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
+	RewriteEngine On
+	RewriteBase /
+	RewriteRule ^index\.php$ - [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . /index.php [L]
 </IfModule>
 # END WordPress
 
+<IfModule mod_setenvif.c>
+	# Set spammers referral as spambot
+	SetEnvIfNoCase Referer darodar.com spambot=yes
+	SetEnvIfNoCase Referer 7makemoneyonline.com spambot=yes
+	## add as many as you find
+
+	Order allow,deny
+	Allow from all
+	Deny from env=spambot
+</IfModule>
+
 # turn off TRACE method to avoid HTTP Trace attack (XST)
 <IfModule mod_rewrite.c>
-RewriteCond %{REQUEST_METHOD} ^TRACE
-RewriteRule .* - [F]
+	RewriteCond %{REQUEST_METHOD} ^TRACE
+	RewriteRule .* - [F]
 </IfModule>
 
 # avoid query string exploits (NEEDS TESTS)
@@ -102,7 +113,8 @@ BrowserMatch ^Mozilla/4\.0[678] no-gzip
 BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
 
 # Make sure proxies don't deliver the wrong content
-Header append Vary User-Agent env=!dont-vary
+# UPDATE: this line produces 500 Internal Server Error, it's evil, just don't do it. M'key?
+# Header append Vary User-Agent env=!dont-vary
 </IfModule>
 
 # protect from spam comments
@@ -118,12 +130,12 @@ RewriteRule (.*) ^http://%{REMOTE_ADDR}/$ [R=301,L]
 
 # block .htaccess / wp-config.php
 <files .htaccess>
-  Order allow,deny
-  Deny from all
+	Order allow,deny
+	Deny from all
 </files>
 <files wp-config.php>
-  Order allow,deny
-  Deny from all
+	Order allow,deny
+	Deny from all
 </files>
 
 # block direct php request into wp-content: http://www.askapache.com/htaccess/htaccess.html
@@ -328,17 +340,17 @@ SetEnvIfNoCase User-Agent "zerxbot" bad_bot
 # Apache < 2.4
 <IfModule !mod_authz_core.c>
  <Limit GET POST>
-  Order allow,deny
-  Allow from all
-  Deny from env=bad_bot
+	Order allow,deny
+	Allow from all
+	Deny from env=bad_bot
  </Limit>
 </IfModule>
 # Apache >= 2.4
 <IfModule mod_authz_core.c>
  <Limit GET POST>
-  <RequireAll>
-   Require all granted
-   Require not env bad_bot
-  </RequireAll>
+	<RequireAll>
+	 Require all granted
+	 Require not env bad_bot
+	</RequireAll>
  </Limit>
 </IfModule>

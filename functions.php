@@ -1,7 +1,7 @@
 <?php
 // check setup
 ( ! defined( 'WPCTB__CONFIG' ) ) &&
-	return wpctb__setup_error();
+	return wpctb__setup_error(); /* fix: this is wrong. this functions won't exist */
 
 show_admin_bar( false );
 
@@ -34,7 +34,7 @@ function wpctb__init(){
 		'cleanup__head'    => array( 'components/cleanup__head.php', false ),
 		'cleanup__various' => array( 'components/cleanup__various.php', false ),
 
-		'i18n/l10n'        => array( 'components/i18n.php', false ),
+		'i18n/l10n'        => array( 'components/i18n.php', true ),
 
 		'plugin__wpthumb'        => array( 'plugins/wp-thumb/wpthumb.php', false ),
 		'plugin__wpjqueryplus'   => array( 'plugins/wp-jquery-plus/wp-jquery-plus.php', false ),
@@ -51,3 +51,8 @@ function wpctb__init(){
 	}
 }
 add_action( 'after_setup_theme', 'wptc_init' );
+
+/* add plugin translations support for stupid plugins */
+// global $missing_plugins_textdomains;
+// $missing_plugins_textdomains['example_textdomain'] = 'plugin_folder_name';
+

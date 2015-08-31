@@ -71,7 +71,7 @@ define( 'DISALLOW_FILE_EDIT', true ); /* editors of themes/plugins */
 
 define( 'WP_ALLOW_REPAIR', false ); // only if needed, usage: /wp-admin/maint/repair.php
 define( 'DO_NOT_UPGRADE_GLOBAL_TABLES', true );
-print_r( @get_defined_constants() );
+// print_r( @get_defined_constants() );
 
 // for analysis
 define( 'SAVEQUERIES', true );
