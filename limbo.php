@@ -1,77 +1,7 @@
 <?php
-// CONSTANTS FOR WP-CONFIG: https://codex.wordpress.org/Editing_wp-config.php
-// Explanations: http://wpengineer.com/2382/wordpress-constants-overview/
-// Generator: http://generatewp.com/wp-config/
-
-ini_set( 'date.timezone', 'Europe/Rome' );
-
-// useful for apis (and not using admin-ajax.php)
-// define( 'DISABLE_WP_CRON', true );
-// define( 'WP_USE_THEMES', true );
-// define( 'SHORTINIT', true );
-
-/** The charset/collation of the database */
-!defined( 'DB_CHARSET' ) && define( 'DB_CHARSET', 'utf8' );
-!defined( 'DB_COLLATE' ) && define( 'DB_COLLATE', 'utf8_general_ci' );
-
-!defined( 'FS_CHMOD_DIR' )  && define( 'FS_CHMOD_DIR', ( 0755 & ~ umask() ) );
-!defined( 'FS_CHMOD_FILE' ) && define( 'FS_CHMOD_FILE', ( 0644 & ~ umask() ) );
-!defined( 'FS_CONNECT_TIMEOUT' ) && define( 'FS_CONNECT_TIMEOUT', 30 );
-!defined( 'FS_TIMEOUT' ) && define( 'FS_TIMEOUT', 30 );
-// ignore FTP login to install plugins or stuff
-!defined( 'FS_METHOD' )  && define( 'FS_METHOD', 'direct' );
-
-$basedir = '/web';
-!defined( 'FTP_BASE' ) && define( 'FTP_BASE', $basedir );
-!defined( 'FTP_USER' ) && define( 'FTP_USER', 'username' );
-!defined( 'FTP_PASS' ) && define( 'FTP_PASS', 'password' );
-!defined( 'FTP_HOST' ) && define( 'FTP_HOST', 'ftp.example.org' );
-!defined( 'FTP_SSL' )  && define( 'FTP_SSL', false );
-define( 'FTP_CONTENT_DIR', FTP_BASE.'/wp-content/' );
-define( 'FTP_PLUGIN_DIR ', FTP_BASE.'/wp-content/plugins/' );
-
-!defined( 'DISABLE_WP_CRON' )      && define( 'DISABLE_WP_CRON', false );
-!defined( 'WP_CRON_LOCK_TIMEOUT' ) && define( 'WP_CRON_LOCK_TIMEOUT', 60 );
-// different approach to cron running
-!defined( 'ALTERNATE_WP_CRON' ) && define( 'ALTERNATE_WP_CRON', false );
-
-// when in the administration area, the memory can be increased or decreased from the WP_MEMORY_LIMIT by defining WP_MAX_MEMORY_LIMIT.
-// this has to be put before wp-settings.php inclusion
-!defined( 'WP_MEMORY_LIMIT' )     && define( 'WP_MEMORY_LIMIT', '256M' );
-!defined( 'WP_MAX_MEMORY_LIMIT' ) && define( 'WP_MAX_MEMORY_LIMIT', '256M' );
-@ini_set( 'memory_limit', WP_MEMORY_LIMIT );
 
 // define( 'WP_HTTP_BLOCK_EXTERNAL', true );
 // define( 'WP_ACCESSIBLE_HOSTS', 'api.wordpress.org,*.github.com' );
-
-define( 'IMAGE_EDIT_OVERWRITE', true );
-
-define( 'MEDIA_TRASH', false ); // Enables the trash function for Media files
-define( 'IMAGE_EDIT_OVERWRITE', false); // Allows overwriting images when editing them
-
-/* WordPress Cache & Compression */
-define( 'WP_CACHE',            true );
-define( 'COMPRESS_CSS',        true );
-define( 'COMPRESS_SCRIPTS',    true );
-define( 'CONCATENATE_SCRIPTS', true );
-define( 'ENFORCE_GZIP',        true );
-
-/* FTP */
-define( 'FTP_USER', 'test' );
-define( 'FTP_PASS', 'pass' );
-define( 'FTP_HOST', 'host' );
-define( 'FTP_SSL',  false );
-
-/* Updates */
-define( 'AUTOMATIC_UPDATER_DISABLED', true ); // Disable all automatic updates
-define( 'WP_AUTO_UPDATE_CORE', false ); // Disable all core updates
-
-define( 'DISALLOW_FILE_MODS', true ); /* updates to themes/plugins */
-define( 'DISALLOW_FILE_EDIT', true ); /* editors of themes/plugins */
-
-define( 'WP_ALLOW_REPAIR', false ); // only if needed, usage: /wp-admin/maint/repair.php
-define( 'DO_NOT_UPGRADE_GLOBAL_TABLES', true );
-// print_r( @get_defined_constants() );
 
 // for analysis
 define( 'SAVEQUERIES', true );
@@ -81,26 +11,10 @@ if ( current_user_can( 'administrator' ) ) {
     ?></pre><?php
 }
 
-define( 'EMPTY_TRASH_DAYS',  30 ); // 0 = disabled
-define( 'AUTOSAVE_INTERVAL', 10 ); // secs
-define( 'WP_POST_REVISIONS', false ); // int or false
-
 // for moving default folders use followings:
 // WP_CONTENT_DIR, WP_CONTENT_URL, WP_PLUGIN_DIR, WP_PLUGIN_URL, UPLOADS
 // for moving theme directory:
 // it's not possibile, but it's possibile to add a new folder for themes using: register_theme_directory
-
-// maybe useful when moving a website to production
-// try to move (duplicator) a site to a test.domain.it subdomain
-// after that, once moved the domain.it cname, try loading with RELOCATE set to true
-// it should fix everything (accordingly to: https://codex.wordpress.org/Changing_The_Site_URL#Relocate_method)
-// worth a try
-// !defined('WP_SITEURL') && define('WP_SITEURL', 'http://'.$_SERVER['SERVER_NAME']);
-// !defined('WP_HOME') && define('WP_HOME', WP_SITEURL);
-define( 'WP_SITEURL', 'http://domain.it' );
-define( 'WP_HOME', 'http://domain.it' );
-define( 'RELOCATE', false );
-
 
 // wordpress queries
 //   http://benmarshall.me/wordpress-sql-queries/
