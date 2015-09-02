@@ -33,3 +33,11 @@ __define( 'SAVE_QUERIES', WPCTB__DEV );
 // remove or limit revisions
 // example: define( 'WP_POST_REVISIONS', false );
 define( 'WP_POST_REVISIONS', WPCTB__DEV ? 20 : 5 );
+
+/* UPDATES */
+define( 'AUTOMATIC_UPDATER_DISABLED', true ); // Disable all automatic updates
+define( 'WP_AUTO_UPDATE_CORE', false ); // Disable all core updates
+
+/* SECURITY */
+define( 'DISALLOW_FILE_MODS', true ); /* updates to themes/plugins */
+define( 'DISALLOW_FILE_EDIT', true ); /* editors of themes/plugins */

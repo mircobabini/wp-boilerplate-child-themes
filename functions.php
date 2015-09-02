@@ -16,7 +16,7 @@ wpctb()->EXT_CSS   = WPCTB__DEV ? '.min.css' : '.css';
 wpctb()->PROT_HTTP = 'http'.($_SERVER['SERVER_PORT'] == 443 ? 's' : '');
 
 
-require_once 'functions-others.php';
+require_once 'functions-utils.php';
 is_admin() && require_once 'function-admin.php';
 
 function wpctb__init(){
