@@ -34,6 +34,7 @@ function wpctb__init(){
 
 		'security'         => array( 'components/security.php', false ),
 		'cleanup__head'    => array( 'components/cleanup__head.php', false ),
+		'cleanup__toolbar' => array( 'components/cleanup__toolbar.php', false ),
 		'cleanup__various' => array( 'components/cleanup__various.php', false ),
 
 		'i18n/l10n'        => array( 'components/i18n.php', true ),
