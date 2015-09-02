@@ -3,6 +3,7 @@
 if( is_admin_bar_showing() ){
 	add_action( 'admin_bar_menu', function($wpab){
 		// secondary bar
+		$wpab->remove_node( 'user-info' );
 		$wpab->remove_node( 'edit-profile' );
 
 		// primary bar
