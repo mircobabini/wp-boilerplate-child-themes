@@ -1,15 +1,25 @@
 <?php
+// ini_set( 'log_errors', 'On' );
+// ini_set( 'display_errors', 'On' );
+
 // aux error function
-function wpctb__setup_error(){
-	wp_die( 'include <code>wpctb-config.php</code> into wp-config.php, just before wp-settings.php require', 'wpctb: setup error' );
+function wpctb__setup_error( $error = null ){
+	if( $error === null ){
+		$error = 'include <code>wpctb-config.php</code> into wp-config.php, just before wp-settings.php require';
+	}
+
+	$die = function_exists( 'wp_die' ) ? 'wp_die' : 'die';
+	$die( $error );
 }
 
 // check setup
-( ! defined( 'ABSPATH' ) || defined( 'WPINC' ) ) &&
-	return wpctb__setup_error();
+( ! defined( 'ABSPATH' ) || defined( 'WPINC' ) ) && {
+	wpctb__setup_error();
+}
 
-if( defined( 'WP_DEBUG' ) )
-	return wp_die( 'don\'t define WP_DEBUG into wp-config, or comment this check to force (yes, it\'s secure)' );
+if( defined( 'WP_DEBUG' ) ){
+	wpctb__setup_error( 'don\'t define WP_DEBUG into wp-config, or comment this check to force (yes, it\'s secure)' );
+}
 
 // load requirements
 require_once dirname(__FILE__).'/wpctb-utils.php';
@@ -29,6 +39,9 @@ if( ! defined( 'WP_DEBUG' ) ){
 	}
 }
 
+// ini_set( 'log_errors', 'On' );
+// ini_set( 'display_errors', 'On' );
+
 // load non-minified version of wp core assets
 __define( 'SCRIPT_DEBUG', WPCTB__DEV );
 
@@ -44,9 +57,3 @@ __define( 'SAVE_QUERIES', WPCTB__DEV );
 // remove or limit revisions
 // example: define( 'WP_POST_REVISIONS', false );
 define( 'WP_POST_REVISIONS', WPCTB__DEV ? 20 : 5 );
-
-// force perfect jpg images (compression set to 100% instead of 90% i.e. no compression at all)
-// someone said that with 80%/85% you may not even notice the difference
-// after changing, consider using Regenerate Thumbnails plugin to affect even old images
-add_filter( 'jpeg_quality', function(){ return 100; } );
-add_filter( 'wp_editor_set_quality', function(){ return 100; } );

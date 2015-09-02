@@ -1,7 +1,7 @@
 <?php
 // check setup
 ( ! defined( 'WPCTB__CONFIG' ) ) &&
-	return wpctb__setup_error(); /* fix: this is wrong. this functions won't exist */
+	return wpctb__setup_error();
 
 show_admin_bar( false );
 
@@ -21,7 +21,8 @@ function wpctb__init(){
 	// setup components
 	$components = array(
 		/* keys are just for components legibility */
-		'debug' => array( 'components/debug.php', false ),
+		'default' => array( 'components/default.php', false ),
+		'debug'   => array( 'components/debug.php', false ),
 
 		'assets__init'       => array( 'assets/init.php', true ),
 		'assets__init-admin' => array( 'assets/init-admin.php', is_admin() ),
