@@ -42,3 +42,20 @@ function wp_debug__display( $bool ){
 	@ini_set( 'display_errors', $bool ? 'On' : 'Off' );
 	__define( 'WP_DEBUG_DISPLAY', $bool );
 }
+
+/* basic class */
+class wpctb{
+	protected $values = array();
+
+	public function __get( $key ){
+		if( isset( $this->values[ $key ] ) ){
+			return $this->values[ $key ];
+		}else{
+			return null;
+		}
+	}
+
+	public function __set( $key, $value ){
+		$this->values[ $key ] => $value;
+	}
+}

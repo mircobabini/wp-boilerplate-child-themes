@@ -1,27 +1,29 @@
 <?php
 // check setup
-( ! defined( 'WPCTB__CONFIG' ) ) &&
-	return wpctb__setup_error();
-
-show_admin_bar( false );
+( ! defined( 'WPCTB__CONFIG' ) ) && {
+	wpctb__setup_error();
+}
 
 define( 'WPCTB__BOILERPLATE_PATH', dirname(__FILE__) );
 define( 'WPCTB__BOILERPLATE_ASSETS', get_stylesheet_directory_uri() );
 
-define( 'COND_EXT_JS', WPCTB__DEV ? '.min.js' : '.js' );
-define( 'COND_EXT_CSS', WPCTB__DEV ? '.min.css' : '.css' );
-define( 'COND_PROT_HTTP', 'http'.($_SERVER['SERVER_PORT'] == 443 ? 's' : '') );
+
+wpctb()->VERSION_JS  = '1.0.0';
+wpctb()->VERSION_CSS = '1.0.0';
+
+wpctb()->EXT_JS    = WPCTB__DEV ? '.min.js' : '.js';
+wpctb()->EXT_CSS   = WPCTB__DEV ? '.min.css' : '.css';
+wpctb()->PROT_HTTP = 'http'.($_SERVER['SERVER_PORT'] == 443 ? 's' : '');
+
 
 require_once 'functions-others.php';
-if( is_admin() ){ require_once 'function-admin.php'; }
+is_admin() && require_once 'function-admin.php';
 
 function wpctb__init(){
-	add_editor_style( get_stylesheet_directory_uri() . '/library/css/editor-style.css' );
-
 	// setup components
 	$components = array(
 		/* keys are just for components legibility */
-		'base'  => array( 'components/base.php', false ),
+		'base'  => array( 'components/base.php', true ),
 		'debug' => array( 'components/debug.php', false ),
 
 		'assets__init'       => array( 'assets/init.php', true ),
@@ -52,8 +54,3 @@ function wpctb__init(){
 	}
 }
 add_action( 'after_setup_theme', 'wptc_init' );
-
-/* add plugin translations support for stupid plugins */
-// global $missing_plugins_textdomains;
-// $missing_plugins_textdomains['example_textdomain'] = 'plugin_folder_name';
-
