@@ -1,18 +1,5 @@
 <?php
 function wpctb__head_cleanup(){
-	// todo: ?
-	// remove_action('wp_head', 'feed_links', 2);
-	// remove_action('wp_head', 'feed_links_extra', 3);
-	// remove_action('wp_head', 'rsd_link');
-	// remove_action('wp_head', 'wlwmanifest_link');
-	// remove_action('wp_head', 'index_rel_link');
-	// remove_action('wp_head', 'parent_post_rel_link', 10, 0);
-	// remove_action('wp_head', 'start_post_rel_link', 10, 0);
-	// remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
-	// remove_action('wp_head', 'wp_generator');
-	// remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
-	// remove_action('wp_head', 'noindex', 1);
-
 	// category feeds
 	remove_action( 'wp_head', 'feed_links_extra', 3 );
 	// post and comment feeds
@@ -29,10 +16,14 @@ function wpctb__head_cleanup(){
 	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
 	// WP version
 	remove_action( 'wp_head', 'wp_generator' );
+	// others
+	remove_action('wp_head', 'index_rel_link');
+	remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
+	remove_action('wp_head', 'noindex', 1);
 
 	// remove WP version from css
 	add_filter( 'style_loader_src', 'bones_remove_wp_ver_css_js', 9999 );
-	// remove Wp version from scripts
+	// remove WP version from scripts
 	add_filter( 'script_loader_src', 'bones_remove_wp_ver_css_js', 9999 );
 
 	// remove pesky injected css for recent comments widget

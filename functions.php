@@ -31,7 +31,6 @@ function wpctb__init(){
 
 		'enhance__ltie9support' => array( 'components/enhance__ltie9support.php', false ), // todo: add local ballbacks
 		'enhance__fastclick'    => array( 'components/enhance__fastclick.php', wp_is_mobile() ), // todo: add local ballbacks
-		// 'enhance__jquery'       => array( 'components/enhance__jquery-cdn.php', true ), // @deprecated since 0.1.13-beta
 
 		'security'         => array( 'components/security.php', false ),
 		'cleanup__head'    => array( 'components/cleanup__head.php', false ),
@@ -42,6 +41,7 @@ function wpctb__init(){
 		'plugin__wpthumb'        => array( 'plugins/wp-thumb/wpthumb.php', false ),
 		'plugin__wpjqueryplus'   => array( 'plugins/wp-jquery-plus/wp-jquery-plus.php', false ),
 		'plugin__wpmobiledetect' => array( 'plugins/wp-mobile-detect/wp-mobile-detect.php', false ),
+		// wpthumb+wpmobiledetect usage example: example/flatsome.lightweight-slideshows.php
 	);
 
 	// load components
@@ -49,7 +49,7 @@ function wpctb__init(){
 		list( $filepath, $active );
 
 		if( $active ){
-			require WPCTB__BOILERPLATE_PATH.$filepath;
+			require_once( WPCTB__BOILERPLATE_PATH . $filepath );
 		}
 	}
 }
