@@ -114,6 +114,3 @@ function wpctb__admin_footer_text( $default_text ) {
 !defined('ACTION_DEBUG') && define('ACTION_DEBUG', WP_DEBUG);
 /** This will allow you to edit the scriptname.dev.js files in the wp-includes/js and wp-admin/js directories.  */
 !defined('SCRIPT_DEBUG') && define('SCRIPT_DEBUG', WP_DEBUG);
-
-// + secure your keys
-// https://api.wordpress.org/secret-key/1.1/
