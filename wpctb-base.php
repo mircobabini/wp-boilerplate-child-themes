@@ -1,44 +1,20 @@
 <?php
-// ini_set( 'log_errors', 'On' );
-// ini_set( 'display_errors', 'On' );
-
-// aux error function
-function wpctb__setup_error( $error = null ){
-	if( $error === null ){
-		$error = 'include <code>wpctb-config.php</code> into wp-config.php, just before wp-settings.php require';
-	}
-
-	$die = function_exists( 'wp_die' ) ? 'wp_die' : 'die';
-	$die( $error );
-}
-
-// check setup
-( ! defined( 'ABSPATH' ) || defined( 'WPINC' ) ) && {
-	wpctb__setup_error();
-}
-
-if( defined( 'WP_DEBUG' ) ){
-	wpctb__setup_error( 'don\'t define WP_DEBUG into wp-config, or comment this check to force (yes, it\'s secure)' );
-}
-
-// load requirements
-require_once dirname(__FILE__).'/wpctb-utils.php';
-
-// globally mark this file as required
-define( 'WPCTB__CONFIG', 1 );
-
-
-// tuning
-define( 'WPCTB__DEV', true );
 
 /* DEBUGGING */
+define( 'WPCTB__DEV', true );
+
 if( ! defined( 'WP_DEBUG' ) ){
+	/* no    debug: false, false, false */
+	/* operativity: true, false, false */
+	/* soft  debug: true, true, false */
+	/* hard  debug: true, true, true */
 	if( wp_debug__( true ) ){
 		wp_debug__log( true );
 		wp_debug__display( false );
 	}
 }
 
+/* you need hardcore debug? */
 // ini_set( 'log_errors', 'On' );
 // ini_set( 'display_errors', 'On' );
 

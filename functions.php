@@ -21,8 +21,8 @@ function wpctb__init(){
 	// setup components
 	$components = array(
 		/* keys are just for components legibility */
-		'default' => array( 'components/default.php', false ),
-		'debug'   => array( 'components/debug.php', false ),
+		'base'  => array( 'components/base.php', false ),
+		'debug' => array( 'components/debug.php', false ),
 
 		'assets__init'       => array( 'assets/init.php', true ),
 		'assets__init-admin' => array( 'assets/init-admin.php', is_admin() ),
