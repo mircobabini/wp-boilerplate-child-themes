@@ -5,28 +5,33 @@ http://ia.net/blog/responsive-typography-the-basics/
 http://alistapart.com/column/responsive-typography-is-a-physical-discipline
 ******************************************************************/
 
+/* CSS Hacks Targeting Firefox */
+@-moz-document url-prefix() {
+	.selector{}
+}
+
 /*
 some nice typographical defaults
 more here: http://www.newnet-soft.com/blog/csstypography
 */
 p {
-  -ms-word-wrap: break-word;
-  word-break: break-word; /*non-standart css for webkit*/
-  word-wrap: break-word;
-  /*cleaning up the ragged lines and breaks*/
-  -webkit-hyphens: auto;
-     -moz-hyphens: auto;
-          hyphens: auto;
-  /*sets a minimum number of characters before and after the break*/
-  -webkit-hyphenate-before: 2;
-   -webkit-hyphenate-after: 3;
-           hyphenate-lines: 3;
-  /*enabling fancy ligatures when available*/
-  -webkit-font-feature-settings: "liga", "dlig";
-   -moz-font-feature-settings: "liga=1, dlig=1";
-      -ms-font-feature-settings: "liga", "dlig";
-       -o-font-feature-settings: "liga", "dlig";
-          font-feature-settings: "liga", "dlig";
+	-ms-word-wrap: break-word;
+	word-break: break-word; /*non-standart css for webkit*/
+	word-wrap: break-word;
+	/*cleaning up the ragged lines and breaks*/
+	-webkit-hyphens: auto;
+		 -moz-hyphens: auto;
+					hyphens: auto;
+	/*sets a minimum number of characters before and after the break*/
+	-webkit-hyphenate-before: 2;
+	 -webkit-hyphenate-after: 3;
+					 hyphenate-lines: 3;
+	/*enabling fancy ligatures when available*/
+	-webkit-font-feature-settings: "liga", "dlig";
+	 -moz-font-feature-settings: "liga=1, dlig=1";
+			-ms-font-feature-settings: "liga", "dlig";
+			 -o-font-feature-settings: "liga", "dlig";
+					font-feature-settings: "liga", "dlig";
 }
 
 /******************************************************************
@@ -36,70 +41,70 @@ of reasons to edit this stylesheet. If you want to
 though, go for it.
 ******************************************************************/
 @media print {
-  * {
-    background: transparent !important;
-    color: black !important;
-    text-shadow: none !important;
-    filter:none !important;
-    -ms-filter: none !important;
-  }
+	* {
+		background: transparent !important;
+		color: black !important;
+		text-shadow: none !important;
+		filter:none !important;
+		-ms-filter: none !important;
+	}
 
-  a, a:visited {
-    color: #444 !important;
-    text-decoration: underline;
-  }
-  /*show links on printed pages*/
-  a:after, a:visited:after {
-    content: " (" attr(href) ")";
-  }
-  /*show title too*/
-  a abbr[title]:after, a:visited abbr[title]:after{
-    content: " (" attr(title) ")";
-  }
+	a, a:visited {
+		color: #444 !important;
+		text-decoration: underline;
+	}
+	/*show links on printed pages*/
+	a:after, a:visited:after {
+		content: " (" attr(href) ")";
+	}
+	/*show title too*/
+	a abbr[title]:after, a:visited abbr[title]:after{
+		content: " (" attr(title) ")";
+	}
 
-  .ir a:after,
-  a[href^="javascript:"]:after,
-  a[href^="#"]:after {
-    content: "";
-  }
+	.ir a:after,
+	a[href^="javascript:"]:after,
+	a[href^="#"]:after {
+		content: "";
+	}
 
-  pre, blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid;
-  }
+	pre, blockquote {
+		border: 1px solid #999;
+		page-break-inside: avoid;
+	}
 
-  thead {
-    display: table-header-group;
-  }
+	thead {
+		display: table-header-group;
+	}
 
-  tr, img {
-    page-break-inside: avoid;
-  }
+	tr, img {
+		page-break-inside: avoid;
+	}
 
-  img {
-    max-width: 100% !important;
-  }
+	img {
+		max-width: 100% !important;
+	}
 
-  @page {
-    margin: 0.5cm;
-  }
+	@page {
+		margin: 0.5cm;
+	}
 
-  p, h2, h3 {
-    orphans: 3;
-    widows: 3;
-  }
+	p, h2, h3 {
+		orphans: 3;
+		widows: 3;
+	}
 
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
+	h2,
+	h3 {
+		page-break-after: avoid;
+	}
 
-  /*hide content people who print don't need to see*/
-  .sidebar,
-  .page-navigation,
-  .wp-prev-next,
-  .respond-form,
-  nav {
-    display: none;
-  }
+	/*hide content people who print don't need to see*/
+	.sidebar,
+	.page-navigation,
+	.wp-prev-next,
+	.respond-form,
+	nav {
+		display: none;
+	}
 }

@@ -2,3 +2,11 @@
 .lt-ie9{}
 .lt-ie8{}
 .lt-ie7{}
+
+/* CSS Hacks Targeting IE */
+@media screen\0{
+	.selector{}
+}
+@media screen\9{
+	.selector{}
+}
