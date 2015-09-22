@@ -26,20 +26,10 @@ function wp_debug__( $bool ){
 function wp_debug__log( $bool, $file = null ){
 	@ini_set( 'log_errors', $bool ? 'On' : 'Off' );
 	__define( 'WP_DEBUG_LOG', $bool );
-
-	if( $file === false ){
-		return;
-	}
-
-	if( $file === null ){
-		$file = ABSPATH.'wpctb-errors'.( WPCTB__DEV ? '.dev':'' ) . '.log';
-	}
-
-	@ini_set( 'error_log', $file );
-	__define( 'ERRORLOGFILE', $file ); // database erros will be logged into the file
 }
 function wp_debug__display( $bool ){
 	@ini_set( 'display_errors', $bool ? 'On' : 'Off' );
+    @ini_set( 'display_startup_errors', $bool ? 'On' : 'Off' );
 	__define( 'WP_DEBUG_DISPLAY', $bool );
 }
 

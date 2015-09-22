@@ -1,0 +1,9 @@
+# The wp-content folder is the most important WordPress folder
+# as it contains your themes, plugins, images, cached files, etc.
+# This makes it the major target for hackers, so it should be well protected.
+# @see http://www.mageewp.com/use-htaccess-to-improve-wordpress-security.html
+Order deny,allow
+Deny from all
+<Files ~ ".(xml|css|jpe?g|png|gif|js)$">
+Allow from all
+</Files>

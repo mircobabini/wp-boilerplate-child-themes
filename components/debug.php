@@ -1,4 +1,13 @@
 <?php
+function wpctb__disable_error_reporting(){
+    @error_reporting(0);
+    @ini_set( 'display_errors', 'Off' );
+    @ini_set( 'display_startup_errors', 'Off' );
+    global $wpdb;
+    $wpdb->hide_errors();
+    $wpdb->suppress_errors();
+}
+
 // http://www.wprecipes.com/list-all-hooked-wordpress-functions
 // usage: list_hooked_functions(), list_hooked_functions( 'wp_head' )
 function list_hooked_functions($tag=false){

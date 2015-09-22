@@ -5,7 +5,7 @@ This is a full-featured child theme boilerplate to start with.
 ## Author
 Mirco Babini <mirkolofio@gmail.com> for [SED Web](http://sedweb.it)
 
-Latest version: v0.1.23-beta
+Latest version: v0.1.24-beta
 
 ## Website
 <http://sedweb.it>

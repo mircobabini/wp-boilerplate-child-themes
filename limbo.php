@@ -102,12 +102,6 @@ add_action( 'init', function(){
 	add_post_type_support( 'page', 'excerpt' );
 } );
 
-// change admin credits
-add_filter( 'admin_footer_text', 'wpctb__admin_footer_text' );
-function wpctb__admin_footer_text( $default_text ) {
-	return '<span id="footer-thankyou">Powered by <a href="http://sedweb.it">SED Web</a><span>';
-}
-
 /**#@+
  * DEBUGGING STUFF
  */

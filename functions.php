@@ -15,6 +15,9 @@ wpctb()->EXT_JS    = WPCTB__DEV ? '.min.js' : '.js';
 wpctb()->EXT_CSS   = WPCTB__DEV ? '.min.css' : '.css';
 wpctb()->PROT_HTTP = 'http'.($_SERVER['SERVER_PORT'] == 443 ? 's' : '');
 
+if( ! user__is( 'administrator' ) && function_exists( 'wpctb__disable_error_reporting' ) ){
+	add_action( 'init', 'wpctb__disable_error_reporting' );
+}
 
 require_once 'functions-utils.php';
 is_admin() && require_once 'function-admin.php';

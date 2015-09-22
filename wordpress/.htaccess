@@ -1,4 +1,5 @@
 # todo: integrate https://github.com/roots/wp-h5bp-htaccess
+# todo: disable debug.log RewriteRule ^/?wp-config/debug\.log$ - [F,L]
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
@@ -11,6 +12,56 @@
 </IfModule>
 # END WordPress
 
+# BEGIN protect .htaccess
+<FilesMatch "(\.htaccess)">
+	Order deny,allow
+	Deny from all
+</FilesMatch>
+<Files wp\-config\.php>
+	Order Deny,Allow
+	Deny from all
+</Files>
+# END ---
+
+# BEGIN recommended php_value(s)
+php_value post_max_size 100M
+php_value upload_max_filesize 32M
+# php_flag display_errors Off
+# END ---
+
+# BEGIN disable xmlrpc
+<Files xmlrpc.php>
+	Order Deny,Allow
+	Deny from all
+</Files>
+# BEGIN disable xmlrpc (only for unknown clients)
+# <IfModule mod_setenvif.c>
+# 	<Files xmlrpc.php>
+# 	BrowserMatch "Poster" allowed
+# 	BrowserMatch "WordPress" allowed
+# 	BrowserMatch "Windows Live Writer" allowed
+# 	BrowserMatch "wp-iphone" allowed
+# 	BrowserMatch "wp-android" allowed
+# 	Order Deny,Allow
+# 	Deny from All
+# 	Allow from env=allowed
+# 	</Files>
+# </IfModule>
+# END ---
+
+# BEGIN block include-only files
+# There are some really important files that should never be accessible
+# from outside WordPress. Protect your files with the following code:
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+	RewriteRule ^wp-admin/includes/ - [F,L]
+	RewriteRule !^wp-includes/ - [S=3]
+	RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]
+	RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
+	RewriteRule ^wp-includes/theme-compat/ - [F,L]
+</IfModule>
+# END ---
 <IfModule mod_setenvif.c>
 	# Set spammers referral as spambot
 	SetEnvIfNoCase Referer darodar.com spambot=yes
@@ -52,12 +103,14 @@ RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-inc
 RewriteRule .* - [F,NS,L]
 </IfModule>
 
-# Enable caching
+# BEGIN browser caching
 <IfModule mod_expires.c>
 ExpiresActive On
 
-ExpiresByType text/css "access 2 days"
-ExpiresByType text/x-javascript "access 2 days"
+ExpiresByType text/css "access 1 month" # 7 days?
+ExpiresByType text/x-javascript "access 1 month" # 7 days?
+ExpiresByType text/html "access 1 month"
+ExpiresByType application/pdf "access 1 month"
 
 ExpiresByType image/jpg "access 1 year"
 ExpiresByType image/jpeg "access 1 year"
@@ -69,6 +122,7 @@ ExpiresByType image/x-icon "access 1 year"
 
 ExpiresDefault "access 2 days"
 </IfModule>
+# END ---
 
 # http://www.askapache.com/htaccess/htaccess.html
 ServerSignature Off
