@@ -18,6 +18,9 @@
 // integrate on our own mainwp install: https://www.rackaid.com/blog/wordpress-brute-force/
 // check suhosin?: http://stackoverflow.com/questions/3383916/how-to-check-whether-suhosin-is-installed
 // integrate: from 9 to bottom http://wpsecure.net/secure-wordpress-advanced/
+// file integrity: https://wordpress.org/plugins/sucuri-scanner/
+// file integrity: https://wordpress.org/plugins/wordfence/
+// file integrity: https://wordpress.org/plugins/wordpress-file-monitor-plus/
 
 // todo with plugins / default clone:
 // - wp_ to something different

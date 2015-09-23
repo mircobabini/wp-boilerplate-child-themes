@@ -117,6 +117,7 @@ add_action( 'init', function(){
 	wpctb__file_secure( ABSPATH.'/wp-admin/install.php', 0000 );
 	wpctb__file_secure( ABSPATH.'/wp-admin/upgrade.php', 0000 );
 	wpctb__file_secure( ABSPATH.'/wp-admin/.htaccess', 0644, "Order deny,allow\nDeny from all" );
+	wpctb__file_secure( ABSPATH.'/wp-config/debug.log', 0000 );
 	wpctb__file_silence( WP_CONTENT_DIR.'/index.php' );
 	wpctb__file_silence( WP_CONTENT_DIR.'/plugins/index.php' );
 	wpctb__file_silence( WP_CONTENT_DIR.'/themes/index.php' );
