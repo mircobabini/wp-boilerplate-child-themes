@@ -5,6 +5,9 @@ function wpctb__init_security(){
 	// remove WP version from scripts
 	add_filter( 'script_loader_src', 'bones_remove_wp_ver_css_js', 9999 );
 
+    // remove login errors
+    add_filter( 'login_errors', create_function('$a', "return null;") );
+
 	// thanks Acunetix
     if( function_exists( 'the_generator' ) ){
         // eliminate version for wordpress >= 2.4

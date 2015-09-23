@@ -1,0 +1,12 @@
+# TEMP MAINTENANCE PAGE
+# https://perishablepress.com/what-to-do-when-your-site-gets-hacked/
+<IfModule mod_rewrite.c>
+	RewriteCond %{REMOTE_ADDR} !^123\.456\.789$
+	RewriteCond %{REMOTE_ADDR} !^987\.654\.321$
+	RewriteRule .* - [R=503,L]
+</IfModule>
+<IfModule mod_headers.c>
+	# 3600 = 60 minutes
+	# 86400 = 1 day
+	Header always set Retry-After "86400"
+</IfModule>

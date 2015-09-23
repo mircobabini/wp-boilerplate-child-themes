@@ -38,9 +38,13 @@ function wp_debug__display( $bool ){
 }
 
 /* functions on files */
-function wpctb__file_secure( $filename, $mode ){
-	if( is_file( $filename ) && is_readable( $file ) ){
+function wpctb__file_secure( $filename, $mode, $content = null ){
+	if( is_file( $filename ) ){
 		@chmod( $filename, $mode );
+
+		if( $content !== null ){
+			file_put_contents( $filename, $content );
+		}
 	}
 }
 function wpctb__file_silence( $filename ){
