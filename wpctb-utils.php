@@ -11,8 +11,12 @@ function __define( $name, $value, $case_insensitive = false ){
 	define( $name, $value, $case_insensitive );
 	return true; // done
 }
+/* secure constant */
+function __constant( $name ){
+	return defined( $name ) && constant( $name ) );
+}
 
-/* debug utils */
+/* functions for debug */
 function wp_debug__( $bool ){
 	__define( 'WP_DEBUG', $bool );
 
@@ -33,18 +37,30 @@ function wp_debug__display( $bool ){
 	__define( 'WP_DEBUG_DISPLAY', $bool );
 }
 
+/* functions on files */
 function wpctb__file_secure( $filename, $mode ){
 	if( is_file( $filename ) && is_readable( $file ) ){
-		chmod( $filename, $mode );
+		@chmod( $filename, $mode );
 	}
 }
 function wpctb__file_silence( $filename ){
-	if( ! is_file( $filename ) ){
-		file_put_contents( $filename, '<?php // Speech is of Time, Silence is of Eternity' );
+	if( ! is_file( $filename ) && is_writable( dirname( $filename ) ) ){
+		@file_put_contents( $filename, '<?php // Speech is of Time, Silence is of Eternity' );
+		@chmod( $filename, 0644 );
 	}
 }
 
-/* basic class */
+/* aux error function */
+function wpctb__setup_error( $error = null ){
+	if( $error === null ){
+		$error = 'include <code>wpctb-config.php</code> into wp-config.php, just before wp-settings.php require';
+	}
+
+	$die = function_exists( 'wp_die' ) ? 'wp_die' : 'die';
+	$die( $error );
+}
+
+/* wpctb: basic class */
 class wpctb{
 	protected $values = array();
 

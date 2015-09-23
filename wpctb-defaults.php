@@ -2,7 +2,6 @@
 // CONSTANTS FOR WP-CONFIG: https://codex.wordpress.org/Editing_wp-config.php
 // Explanations: http://wpengineer.com/2382/wordpress-constants-overview/
 // Generator: http://generatewp.com/wp-config/
-ini_set( 'date.timezone', 'Europe/Rome' );
 
 /* TOOLS */
 // allows overwriting images when editing them

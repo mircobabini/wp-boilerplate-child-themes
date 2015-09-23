@@ -17,12 +17,12 @@ wpctb()->EXT_JS    = WPCTB__DEV ? '.min.js' : '.js';
 wpctb()->EXT_CSS   = WPCTB__DEV ? '.min.css' : '.css';
 wpctb()->PROT_HTTP = 'http'.($_SERVER['SERVER_PORT'] == 443 ? 's' : '');
 
-if( ! user__is( 'administrator' ) && function_exists( 'wpctb__disable_error_reporting' ) ){
-	add_action( 'init', 'wpctb__disable_error_reporting' );
-}
-
 require_once 'functions-utils.php';
 is_admin() && require_once 'function-admin.php';
+
+if( function_exists( 'wpctb__maybe_disable_error_reporting' ) ){
+	wpctb__maybe_disable_error_reporting();
+}
 
 function wpctb__init(){
 	// setup components
@@ -37,10 +37,11 @@ function wpctb__init(){
 		'enhance__ltie9support' => array( 'components/enhance__ltie9support.php', false ), // todo: add local ballbacks
 		'enhance__fastclick'    => array( 'components/enhance__fastclick.php', wp_is_mobile() ), // todo: add local ballbacks
 
-		'security'         => array( 'components/security.php', false ),
-		'cleanup__head'    => array( 'components/cleanup__head.php', false ),
-		'cleanup__toolbar' => array( 'components/cleanup__toolbar.php', false ),
-		'cleanup__various' => array( 'components/cleanup__various.php', false ),
+		'security'         => array( 'components/security.php',         !is_administrator() ),
+		'security__admin'  => array( 'components/security__admin.php',   is_admin() && !is_administrator() ),
+		'cleanup__head'    => array( 'components/cleanup__head.php',    !is_administrator() ),
+		'cleanup__toolbar' => array( 'components/cleanup__toolbar.php', true ),
+		'cleanup__various' => array( 'components/cleanup__various.php', !is_admin() ),
 
 		'i18n/l10n'        => array( 'components/i18n.php', true ),
 

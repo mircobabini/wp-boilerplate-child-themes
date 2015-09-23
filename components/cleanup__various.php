@@ -18,7 +18,6 @@ function bones_remove_wp_widget_recent_comments_style() {
 		remove_filter( 'wp_head', 'wp_widget_recent_comments_style' );
 	}
 }
-
 // remove injected CSS from recent comments widget
 function bones_remove_recent_comments_style() {
 	global $wp_widget_factory;

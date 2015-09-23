@@ -1,17 +1,10 @@
 <?php
+ini_set( 'date.timezone', 'Europe/Rome' );
+require_once( dirname(__FILE__) . '/wpctb-utils.php' );
+
 /* you need hardcore debug? */
 // ini_set( 'log_errors', 'On' );
 // ini_set( 'display_errors', 'On' );
-
-// aux error function
-function wpctb__setup_error( $error = null ){
-	if( $error === null ){
-		$error = 'include <code>wpctb-config.php</code> into wp-config.php, just before wp-settings.php require';
-	}
-
-	$die = function_exists( 'wp_die' ) ? 'wp_die' : 'die';
-	$die( $error );
-}
 
 // check setup
 ( ! defined( 'ABSPATH' ) || defined( 'WPINC' ) ) && {
@@ -26,5 +19,4 @@ if( defined( 'WP_DEBUG' ) ){
 define( 'WPCTB__CONFIG', 1 );
 
 // load utils
-require_once( dirname(__FILE__) . '/wpctb-utils.php' );
-require_once( dirname(__FILE__) . '/wpctb-base.php' );
+require_once( dirname(__FILE__) . '/wpctb-defaults.php' );

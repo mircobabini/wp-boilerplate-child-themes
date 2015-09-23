@@ -13,3 +13,8 @@ function user__is( $role, $user_id = null ){
 
 	return in_array( $role, (array)$user->roles );
 }
+function is_administrator(){ return user__is( 'administrator' ); }
+
+function wpctb__is_cron_enabled(){
+	return !__constant( 'DISABLE_WP_CRON' );
+}
