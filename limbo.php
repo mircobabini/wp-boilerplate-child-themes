@@ -109,8 +109,19 @@ add_action( 'init', function(){
 /** This will allow you to edit the scriptname.dev.js files in the wp-includes/js and wp-admin/js directories.  */
 !defined('SCRIPT_DEBUG') && define('SCRIPT_DEBUG', WP_DEBUG);
 
-// boh | todo: move to something that executes only once or into a cron
-{
+
+function wpctb__on_activate(){
+	wpctb__on_checkup();
+
+	// create the checkup cron
+}
+function wpctb__on_deactivate(){
+	// delete the checkup cron
+}
+add_action( 'after_switch_theme', 'wpctb__on_activate' );
+add_action( 'switch_theme', 'wpctb__on_deactivate' );
+
+function wpctb__on_checkup(){
 	// @ http://wpsecure.net/secure-wordpress/
 	wpctb__file_secure( ABSPATH.'/wp-config.php', 0600 );
 	// thank you Acunetix
@@ -123,4 +134,3 @@ add_action( 'init', function(){
 	wpctb__file_silence( WP_CONTENT_DIR.'/themes/index.php' );
 	wpctb__file_silence( WP_CONTENT_DIR.'/uploads/index.php' );
 }
-
