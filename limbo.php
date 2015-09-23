@@ -111,6 +111,8 @@ add_action( 'init', function(){
 
 // boh | todo: move to something that executes only once or into a cron
 {
+	// @ http://wpsecure.net/secure-wordpress/
+	wpctb__file_secure( ABSPATH.'/wp-config.php', 0600 );
 	// thank you Acunetix
 	wpctb__file_secure( ABSPATH.'/wp-admin/install.php', 0000 );
 	wpctb__file_secure( ABSPATH.'/wp-admin/upgrade.php', 0000 );

@@ -45,6 +45,7 @@ php_value upload_max_filesize 32M
 # BEGIN block include-only files
 # There are some really important files that should never be accessible
 # from outside WordPress. Protect your files with the following code:
+# @ http://codex.wordpress.org/Hardening_WordPress#Securing_wp-includes
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteBase /
@@ -66,11 +67,13 @@ php_value upload_max_filesize 32M
 	Deny from env=spambot
 </IfModule>
 
-# turn off TRACE method to avoid HTTP Trace attack (XST)
+# BEGIN turn off TRACE method to avoid HTTP Trace attack (XST)
+# @ http://wpsecure.net/secure-wordpress-advanced/
 <IfModule mod_rewrite.c>
 	RewriteCond %{REQUEST_METHOD} ^TRACE
 	RewriteRule .* - [F]
 </IfModule>
+# END ---
 
 # avoid query string exploits (NEEDS TESTS)
 RewriteCond %{QUERY_STRING} ../    [NC,OR]

@@ -25,6 +25,13 @@ function wpctb__init_security(){
 }
 add_action( 'init', 'wpctb__init_security' );
 
+// remove l10n script (added in WP 3.1)
+// this script help translate comments entities
+// @ http://wpsecure.net/secure-wordpress-advanced/
+if( ! is_admin() ){
+    wp_deregister_script( 'l10n' );
+}
+
 // integrate: https://github.com/roots/soil
 
 // should be placed as first lines in index.php

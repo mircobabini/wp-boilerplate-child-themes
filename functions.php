@@ -14,6 +14,21 @@
 // integrate: https://wordpress.org/plugins/wp-performance-score-booster/
 // test: https://wordpress.org/plugins/google-pagespeed-insights/
 // integrate: https://wordpress.org/plugins/wp-http-compression/
+// check trick 10 (performance improve): https://www.wphub.com/wordpress-snippets-wp-config/
+// integrate on our own mainwp install: https://www.rackaid.com/blog/wordpress-brute-force/
+// check suhosin?: http://stackoverflow.com/questions/3383916/how-to-check-whether-suhosin-is-installed
+// integrate: from 9 to bottom http://wpsecure.net/secure-wordpress-advanced/
+
+// todo with plugins / default clone:
+// - wp_ to something different
+// - 1|admin to 42|itsedweb
+// - limit login attempts (ex: http://wordpress.org/extend/plugins/limit-login-attempts/)
+
+// todo with wpctb/mainwp scan/cron
+// - check file permissions
+// - check .htaccess existence
+// - check index.php for silence existence
+// - delete readme.txt and similar useless files
 (!defined('ABSPATH')) && exit; // todo: test!
 
 // check setup

@@ -23,8 +23,3 @@ function wpctb__load_missing_plugins_textdomains(){
 		load_textdomain( $textdomain, trailingslashit( WP_LANG_DIR ) . "plugins/{$plugin_slug}-{$locale}.mo" );
 	}
 }
-
-// todo: ?
-if (!is_admin()) {
-	wp_deregister_script( 'l10n' ); // this script help translate comments entities
-}
