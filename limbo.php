@@ -108,3 +108,15 @@ add_action( 'init', function(){
 !defined('ACTION_DEBUG') && define('ACTION_DEBUG', WP_DEBUG);
 /** This will allow you to edit the scriptname.dev.js files in the wp-includes/js and wp-admin/js directories.  */
 !defined('SCRIPT_DEBUG') && define('SCRIPT_DEBUG', WP_DEBUG);
+
+// boh | todo: move to something that executes only once or into a cron
+{
+	// thank you Acunetix
+	wpctb__file_secure( ABSPATH.'/wp-admin/install.php', 0000 );
+	wpctb__file_secure( ABSPATH.'/wp-admin/upgrade.php', 0000 );
+	wpctb__file_silence( WP_CONTENT_DIR.'/index.php' );
+	wpctb__file_silence( WP_CONTENT_DIR.'/plugins/index.php' );
+	wpctb__file_silence( WP_CONTENT_DIR.'/themes/index.php' );
+	wpctb__file_silence( WP_CONTENT_DIR.'/uploads/index.php' );
+}
+

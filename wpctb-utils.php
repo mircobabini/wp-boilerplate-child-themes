@@ -33,6 +33,17 @@ function wp_debug__display( $bool ){
 	__define( 'WP_DEBUG_DISPLAY', $bool );
 }
 
+function wpctb__file_secure( $filename, $mode ){
+	if( is_file( $filename ) && is_readable( $file ) ){
+		chmod( $filename, $mode );
+	}
+}
+function wpctb__file_silence( $filename ){
+	if( ! is_file( $filename ) ){
+		file_put_contents( $filename, '<?php // Speech is of Time, Silence is of Eternity' );
+	}
+}
+
 /* basic class */
 class wpctb{
 	protected $values = array();
