@@ -1,4 +1,12 @@
 <?php
+function wpctb__init_security(){
+	// remove WP version from css
+	add_filter( 'style_loader_src', 'bones_remove_wp_ver_css_js', 9999 );
+	// remove WP version from scripts
+	add_filter( 'script_loader_src', 'bones_remove_wp_ver_css_js', 9999 );
+}
+add_action( 'init', 'wpctb__init_security' );
+
 // integrate: https://github.com/roots/soil
 
 // should be placed as first lines in index.php
@@ -17,3 +25,10 @@ if( function_exists( 'header_remove' ) ){
 
 // todo: test/integrate
 // https://github.com/roots/roots-rewrites
+
+// remove WP version from scripts
+function bones_remove_wp_ver_css_js( $src ) {
+	if ( strpos( $src, 'ver=' ) )
+		$src = remove_query_arg( 'ver', $src );
+	return $src;
+}

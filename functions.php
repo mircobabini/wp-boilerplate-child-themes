@@ -1,4 +1,6 @@
 <?php
+(!defined('ABSPATH')) && exit; // todo: test!
+
 // check setup
 ( ! defined( 'WPCTB__CONFIG' ) ) && {
 	wpctb__setup_error();

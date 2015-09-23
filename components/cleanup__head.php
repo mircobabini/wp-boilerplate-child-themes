@@ -1,5 +1,5 @@
 <?php
-function wpctb__head_cleanup(){
+function wpctb__init_cleanup_head(){
 	// category feeds
 	remove_action( 'wp_head', 'feed_links_extra', 3 );
 	// post and comment feeds
@@ -20,17 +20,6 @@ function wpctb__head_cleanup(){
 	remove_action('wp_head', 'index_rel_link');
 	remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
 	remove_action('wp_head', 'noindex', 1);
-
-	// remove WP version from css
-	add_filter( 'style_loader_src', 'bones_remove_wp_ver_css_js', 9999 );
-	// remove WP version from scripts
-	add_filter( 'script_loader_src', 'bones_remove_wp_ver_css_js', 9999 );
-
-	// remove pesky injected css for recent comments widget
-	add_filter( 'wp_head', 'bones_remove_wp_widget_recent_comments_style', 1 );
-	// clean up comment styles in the head
-	add_action( 'wp_head', 'bones_remove_recent_comments_style', 1 );
-	// clean up gallery output in wp
-	add_filter( 'gallery_style', 'bones_gallery_style' );
 }
-add_action( 'init', 'wpctb__head_cleanup' );
+add_action( 'init', 'wpctb__init_cleanup_head' );
+

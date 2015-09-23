@@ -1,11 +1,16 @@
 <?php
 function wpctb__disable_error_reporting(){
-    @error_reporting(0);
-    @ini_set( 'display_errors', 'Off' );
-    @ini_set( 'display_startup_errors', 'Off' );
-    global $wpdb;
-    $wpdb->hide_errors();
-    $wpdb->suppress_errors();
+	if( user__is( 'administrator' ) || !WP_DEBUG || ( !WP_DEBUG_LOG && !WP_DEBUG_DISPLAY ) ){
+	    @error_reporting(0);
+	    @ini_set( 'display_errors', 'Off' );
+	    @ini_set( 'display_startup_errors', 'Off' );
+
+	    global $wpdb;
+	    $wpdb->hide_errors();
+	    $wpdb->suppress_errors();
+	}else{
+
+	}
 }
 
 // http://www.wprecipes.com/list-all-hooked-wordpress-functions
