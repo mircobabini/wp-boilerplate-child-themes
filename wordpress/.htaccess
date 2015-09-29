@@ -1,9 +1,14 @@
+# todo: move everithing into httpd.conf/apache.conf
 # todo: integrate https://github.com/roots/wp-h5bp-htaccess
-# todo: disable debug.log RewriteRule ^/?wp-config/debug\.log$ - [F,L]
 # BEGIN BLACKHOLE TRAP FOR BAD BOTS
 RewriteCond %{REQUEST_URI} ^/blackhole$
 RewriteRule ^(.*) /wp-content/themes/wpctb-name/addons/blackhole/ [R=301,L]
 # END ---
+
+# http://www.askapache.com/htaccess/htaccess.html
+ServerSignature Off
+SetEnv SERVER_ADMIN it@sedweb.it
+
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
@@ -16,30 +21,204 @@ RewriteRule ^(.*) /wp-content/themes/wpctb-name/addons/blackhole/ [R=301,L]
 </IfModule>
 # END WordPress
 
+# BEGIN Enable CORS
+# code.google.com/p/html5security/wiki/CrossOriginRequestSecurity
+# <IfModule mod_headers.c>
+#	Header set Access-Control-Allow-Origin "*"
+# </IfModule>
+# END ---
+
+# BEGIN CORS-enabled images (@crossorigin)
+# Send CORS headers if browsers request them; enabled by default for images.
+# developer.mozilla.org/en/CORS_Enabled_Image
+# blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html
+# hacks.mozilla.org/2011/11/using-cors-to-load-webgl-textures-from-cross-domain-images/
+# wiki.mozilla.org/Security/Reviews/crossoriginAttribute
+<IfModule mod_setenvif.c>
+	<IfModule mod_headers.c>
+	# mod_headers, y u no match by Content-Type?!
+		<FilesMatch "\.(gif|png|jpe?g|svg|svgz|ico|webp)$">
+			SetEnvIf Origin ":" IS_CORS
+			Header set Access-Control-Allow-Origin "*" env=IS_CORS
+		</FilesMatch>
+	</IfModule>
+</IfModule>
+# END ---
+
+# BEGIN Webfont access
+# Allow access from all domains for webfonts.
+# Alternatively you could only whitelist your
+# subdomains like "subdomain.example.com".
+<IfModule mod_headers.c>
+	<FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css)$">
+		Header set Access-Control-Allow-Origin "*"
+	</FilesMatch>
+</IfModule>
+# END ---
+
+# BEGIN Stop search engines from indexing different files
+<FilesMatch "\.(txt|log|xml|css|js|gz)$">
+	Header set X-Robots-Tag "noindex"
+</FilesMatch>
+# END ---
+
+# BEGIN Proper MIME type for all files
+# https://github.com/bueltge/WordPress-Starter/blob/master/.htaccess
+# END ---
+
+# BEGIN (CACHE) Expires headers
+# These are pretty far-future expires headers.
+# They assume you control versioning with filename-based cache busting
+# Additionally, consider that outdated proxies may miscache
+#   www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/
+# If you don't use filenames to version, lower the CSS  and JS to something like
+#   "access plus 1 week" or so.
+<IfModule mod_expires.c>
+	ExpiresActive on
+
+	<FilesMatch ".(jpg|png|gif)$">
+		ExpiresDefault A0
+		Header set Cache-Control "max-age=0,  no-cache, must-revalidate"
+	</FilesMatch>
+
+	# Perhaps better to whitelist expires rules? Perhaps.
+	ExpiresDefault                "access plus 1 year"
+
+	# cache.appcache needs re-requests in FF 3.6 (thanks Remy ~Introducing HTML5)
+	ExpiresByType text/cache-manifest      "access plus 0 seconds"
+
+	ExpiresByType application/json        "access plus 1 year"
+	ExpiresByType application/pdf        "access plus 1 year"
+	ExpiresByType application/x-shockwave-flash  "access plus 1 year"
+	ExpiresByType image/bmp           "access plus 1 year"
+	ExpiresByType image/gif           "access plus 1 year"
+	ExpiresByType image/jpeg           "access plus 1 year"
+	ExpiresByType image/png           "access plus 1 year"
+	ExpiresByType image/svg+xml         "access plus 1 year"
+	ExpiresByType image/tiff           "access plus 1 year"
+	ExpiresByType image/vnd.microsoft.icon     "access plus 1 year"
+	ExpiresByType image/x-icon          "access plus 1 year"
+	ExpiresByType text/css             "access plus 1 year"
+	ExpiresByType video/x-flv           "access plus 1 year"
+	ExpiresByType application/vnd.bw-fontobject  "access plus 1 year"
+	ExpiresByType application/x-font-ttf    "access plus 1 year"
+	ExpiresByType application/font-woff      "access plus 1 year"
+	ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+	ExpiresByType font/ttf            "access plus 1 year"
+	ExpiresByType font/otf            "access plus 1 year"
+	ExpiresByType font/x-woff          "access plus 1 year"
+	ExpiresByType image/svg+xml          "access plus 1 year"
+	ExpiresByType font/opentype          "access plus 1 year"
+	ExpiresByType image/webp          "access plus 1 year"
+
+	# The following MIME types are in the process of registration
+	ExpiresByType application/xslt+xml      "access plus 1 year"
+	ExpiresByType image/svg+xml          "access plus 1 year"
+
+	# The following MIME types are NOT registered
+	ExpiresByType application/mathml+xml    "access plus 1 year"
+	ExpiresByType application/rss+xml    "access plus 1 year"
+
+	# JavaScript has various MIME types
+	ExpiresByType application/x-javascript     "access plus 1 year"
+	ExpiresByType application/javascript     "access plus 1 year"
+	ExpiresByType text/ecmascript       "access plus 1 year"
+	ExpiresByType text/javascript       "access plus 1 year"
+</IfModule>
+# END ---
+
+# BEGIN ETag removal
+# FileETag None is not enough for every server.
+<IfModule mod_headers.c>
+	Header unset ETag
+</IfModule>
+# Since we're sending far-future expires, we don't need ETags for
+# static content.
+#   developer.yahoo.com/performance/rules.html#etags
+FileETag None
+# END ---
+
+# BEGIN Stop screen flicker in IE on CSS rollovers
+# The following directives stop screen flicker in IE on CSS rollovers - in
+# combination with the "ExpiresByType" rules for images (see above). If
+# needed, un-comment the following rules.
+BrowserMatch "MSIE" brokenvary=1
+BrowserMatch "Mozilla/4.[0-9]{2}" brokenvary=1
+BrowserMatch "Opera" !brokenvary
+SetEnvIf brokenvary 1 force-no-vary
+# END ---
+
+# BEGIN Set Keep-Alive Header
+# Keep-Alive allows the server to send multiple requests through one TCP-connection.
+# Be aware of possible disadvantages of this setting. Turn on if you serve a lot of
+# static content.
+<IfModule mod_headers.c>
+  Header set Connection Keep-Alive
+</IfModule>
+# END ---
+
+# BEGIN Disable advertise of Apache version number
+# This can only be enabled if used in httpd.conf - It will not work in .htaccess
+# ServerTokens Prod
+# END ---
+
 # BEGIN recommended php_value(s)
 php_value post_max_size 100M
 php_value upload_max_filesize 32M
 # php_flag display_errors Off
 # END ---
 
-# BEGIN disable xmlrpc
-<Files xmlrpc.php>
-	Order Deny,Allow
+# BEGIN protect private files
+<FilesMatch "(\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$">
+	Order allow,deny
 	Deny from all
+	Satisfy All
+</FilesMatch>
+# END ---
+
+# BEGIN protect all .htaccess files
+<Files ~ "^[\._]ht">
+	Order Allow,Deny
+	Deny from all
+	Satisfy all
 </Files>
-# BEGIN disable xmlrpc (only for unknown clients)
-# <IfModule mod_setenvif.c>
-# 	<Files xmlrpc.php>
-# 	BrowserMatch "Poster" allowed
-# 	BrowserMatch "WordPress" allowed
-# 	BrowserMatch "Windows Live Writer" allowed
-# 	BrowserMatch "wp-iphone" allowed
-# 	BrowserMatch "wp-android" allowed
+# END ---
+
+# BEGIN protect .htaccess / wp-config.php
+<FilesMatch \.htaccess|wp-config\.php>
+	Order Allow,Deny
+	Deny from all
+	Satisfy all
+</FilesMatch>
+# END ---
+
+# PROTECT install.php
+# Uncomment or change to 'Allow from all' for install of WordPress
+<Files install.php>
+	Order Allow,Deny
+	Deny from all
+	Satisfy all
+</Files>
+
+# BEGIN disable xmlrpc
+# <Files xmlrpc.php>
 # 	Order Deny,Allow
-# 	Deny from All
-# 	Allow from env=allowed
-# 	</Files>
-# </IfModule>
+# 	Deny from all
+# </Files>
+
+# BEGIN xmlrpc access only for these apps
+<IfModule mod_setenvif.c>
+	<Files xmlrpc.php>
+	BrowserMatch "Poster" allowed
+	BrowserMatch "WordPress" allowed
+	BrowserMatch "Windows Live Writer" allowed
+	BrowserMatch "wp-iphone" allowed
+	BrowserMatch "wp-android" allowed
+	Order Deny,Allow
+	Deny from All
+	Allow from env=allowed
+	</Files>
+</IfModule>
 # END ---
 
 # BEGIN block include-only files
@@ -93,11 +272,11 @@ RewriteRule ^(.*)$ - [F,L]
 # BEGIN block proxy visits
 # @ https://perishablepress.com/block-tough-proxies/
 <IfModule mod_rewrite.c>
-RewriteCond %{REQUEST_METHOD} =POST
-RewriteCond %{HTTP:VIA}%{HTTP:FORWARDED}%{HTTP:USERAGENT_VIA}%{HTTP:X_FORWARDED_FOR}%{HTTP:PROXY_CONNECTION} !^$ [OR]
-RewriteCond %{HTTP:XPROXY_CONNECTION}%{HTTP:HTTP_PC_REMOTE_ADDR}%{HTTP:HTTP_CLIENT_IP} !^$
-RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
-RewriteRule .* - [F,NS,L]
+	RewriteCond %{REQUEST_METHOD} =POST
+	RewriteCond %{HTTP:VIA}%{HTTP:FORWARDED}%{HTTP:USERAGENT_VIA}%{HTTP:X_FORWARDED_FOR}%{HTTP:PROXY_CONNECTION} !^$ [OR]
+	RewriteCond %{HTTP:XPROXY_CONNECTION}%{HTTP:HTTP_PC_REMOTE_ADDR}%{HTTP:HTTP_CLIENT_IP} !^$
+	RewriteCond %{REQUEST_URI} !^/(wp-login.php|wp-admin/|wp-content/plugins/|wp-includes/).* [NC]
+	RewriteRule .* - [F,NS,L]
 </IfModule>
 # END ---
 
@@ -110,33 +289,28 @@ RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
 RewriteRule ^(.*)$ index.php [F,L]
 # END ---
 
-# BEGIN browser caching
-<IfModule mod_expires.c>
-ExpiresActive On
+# BEGIN UTF-8 encoding
+# Use UTF-8 encoding for anything served text/plain or text/html
+AddDefaultCharset utf-8
 
-ExpiresByType text/css "access 1 month" # 7 days?
-ExpiresByType text/x-javascript "access 1 month" # 7 days?
-ExpiresByType text/html "access 1 month"
-ExpiresByType application/pdf "access 1 month"
-
-ExpiresByType image/jpg "access 1 year"
-ExpiresByType image/jpeg "access 1 year"
-ExpiresByType image/gif "access 1 year"
-ExpiresByType image/png "access 1 year"
-ExpiresByType application/pdf "access 1 year"
-ExpiresByType application/x-shockwave-flash "access 1 year"
-ExpiresByType image/x-icon "access 1 year"
-
-ExpiresDefault "access 2 days"
+# ----------------------------------------------------------------------
+# Better website experience for IE users
+# ----------------------------------------------------------------------
+# Force the latest IE version, in various cases when it may fall back to IE7 mode
+#  github.com/rails/rails/commit/123eb25#commitcomment-118920
+# Use ChromeFrame if it's installed for a better experience for the poor IE folk
+<IfModule mod_headers.c>
+	Header set X-UA-Compatible "IE=Edge,chrome=1"
+	# mod_headers can't match by content-type, but we don't want to send this header on *everything*...
+	<FilesMatch "\.(js|css|gif|png|jpe?g|pdf|xml|oga|ogg|m4a|ogv|mp4|m4v|webm|svg|svgz|eot|ttf|otf|woff|ico|webp|appcache|manifest|htc|crx|oex|xpi|safariextz|vcf)$" >
+	Header unset X-UA-Compatible
+	</FilesMatch>
 </IfModule>
+
+# Force UTF-8 for a number of file formats
+AddCharset utf-8 .css .js .xml .json .rss .atom
 # END ---
 
-# http://www.askapache.com/htaccess/htaccess.html
-ServerSignature Off
-SetEnv SERVER_ADMIN it@sedweb.it
-
-# headers for charset/language
-AddDefaultCharset UTF-8
 # DefaultLanguage en-US
 
 # deny unused request methods
@@ -146,36 +320,100 @@ RewriteRule .* - [F]
 # limit file uploads to 10mb
 LimitRequestBody 10240000
 
-# avoid listing of folders with no index
-# Options -Indexes
-Options All -Indexes
+# BEGIN Avoid listing of folders with no index
+<IfModule mod_autoindex.c>
+	# Options -Indexes
+	Options All -Indexes
+</IfModule>
 
 # Enable compression https://codex.wordpress.org/Output_Compression
 # Alternative, via php code: ob_start('ob_gzhandler'); as first line into index.php
 # ZLIB COMPRESSION FUNCTION NEEDED INTO PHP
 <IfModule mod_deflate.c>
-# Insert filters
-AddOutputFilterByType DEFLATE text/plain
-AddOutputFilterByType DEFLATE text/html
-AddOutputFilterByType DEFLATE text/xml
-AddOutputFilterByType DEFLATE text/css
-AddOutputFilterByType DEFLATE application/xml
-AddOutputFilterByType DEFLATE application/xhtml+xml
-AddOutputFilterByType DEFLATE application/rss+xml
-AddOutputFilterByType DEFLATE application/javascript
-AddOutputFilterByType DEFLATE application/x-javascript
-AddOutputFilterByType DEFLATE application/x-httpd-php
-AddOutputFilterByType DEFLATE application/x-httpd-fastphp
-AddOutputFilterByType DEFLATE image/svg+xml
+	# Force deflate for mangled headers developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping/
+	<IfModule mod_setenvif.c>
+		<IfModule mod_headers.c>
+			SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+			RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+		</IfModule>
+	</IfModule>
 
-# Drop problematic browsers
-BrowserMatch ^Mozilla/4 gzip-only-text/html
-BrowserMatch ^Mozilla/4\.0[678] no-gzip
-BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+	# HTML, TXT, CSS, JavaScript, JSON, XML, HTC:
+	<IfModule filter_module>
+		FilterDeclare   COMPRESS
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/html
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/css
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/plain
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/xml
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/x-component
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/javascript
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/json
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xml
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/xhtml+xml
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/rss+xml
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/atom+xml
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/vnd.ms-fontobject
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/svg+xml
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $image/x-icon
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $application/x-font-ttf
+		FilterProvider  COMPRESS  DEFLATE resp=Content-Type $font/opentype
+		FilterChain     COMPRESS
+		FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no
+	</IfModule>
 
-# Make sure proxies don't deliver the wrong content
-# UPDATE: this line produces 500 Internal Server Error, it's evil, just don't do it. M'key?
-# Header append Vary User-Agent env=!dont-vary
+	<IfModule !mod_filter.c>
+		# Legacy versions of Apache
+		AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+		AddOutputFilterByType DEFLATE application/javascript
+		AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+		AddOutputFilterByType DEFLATE application/xhtml+xml application/rss+xml application/atom+xml
+		AddOutputFilterByType DEFLATE image/x-icon image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype
+
+		AddOutputFilter DEFLATE application/atom+xml
+		AddOutputFilter DEFLATE application/json
+		AddOutputFilter DEFLATE application/xhtml+xml
+		AddOutputFilter DEFLATE application/xml
+		AddOutputFilter DEFLATE text/css
+		AddOutputFilter DEFLATE text/html
+		AddOutputFilter DEFLATE text/plain
+		AddOutputFilter DEFLATE text/x-component
+		AddOutputFilter DEFLATE text/xml
+
+		# The following MIME types are in the process of registration
+		AddOutputFilter DEFLATE application/xslt+xml
+		AddOutputFilter DEFLATE image/svg+xml
+
+		# The following MIME types are NOT registered
+		AddOutputFilter DEFLATE application/mathml+xml
+		AddOutputFilter DEFLATE application/rss+xml
+
+		# JavaScript has various MIME types
+		AddOutputFilter DEFLATE application/javascript
+		AddOutputFilter DEFLATE application/x-javascript
+		AddOutputFilter DEFLATE text/ecmascript
+		AddOutputFilter DEFLATE text/javascript
+
+		# .ico files and other compressible images
+		AddOutputFilter DEFLATE image/vnd.microsoft.icon
+		AddOutputFilter DEFLATE image/x-icon
+		AddOutputFilter DEFLATE image/bmp
+		AddOutputFilter DEFLATE image/tiff
+		AddOutputFilter DEFLATE application/pdf
+
+		# compressible fonts (.woff is already compressed)
+		AddOutputFilter DEFLATE font/opentype
+		AddOutputFilter DEFLATE application/x-font-ttf font/ttf font/otf image/svg+xml
+		AddOutputFilter DEFLATE application/vnd.ms-fontobject
+	</IfModule>
+
+	# Drop problematic browsers
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+
+	# Make sure proxies don't deliver the wrong content
+	# UPDATE: this line produces 500 Internal Server Error, it's evil, just don't do it. M'key?
+	# Header append Vary User-Agent env=!dont-vary
 </IfModule>
 
 # protect from spam comments
@@ -188,17 +426,6 @@ RewriteRule (.*) ^http://%{REMOTE_ADDR}/$ [R=301,L]
 
 # if 403 doing something into admin area, try
 # SecFilterInheritance Off
-
-# BEGIN protect .htaccess / wp-config.php
-<files .htaccess>
-	Order allow,deny
-	Deny from all
-</files>
-<files wp-config.php>
-	Order allow,deny
-	Deny from all
-</files>
-# END ---
 
 # block direct php request into wp-content: http://www.askapache.com/htaccess/htaccess.html
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /wp-content/.*$ [NC]

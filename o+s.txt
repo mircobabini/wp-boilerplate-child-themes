@@ -1,0 +1,96 @@
+-2: look at the phpinfo page. differences compared to the old server?
+-1: we found the php.ini, but where's the httpd?
+0. analisi lux https://gist.github.com/LuXDAmore/933943a49de5e3d1eca7
+1. creare varie demo per provare, su ognuna un plugin di sicurezza/cache.
+2. verificare, su ogni demo, che modifiche vengono fatte su .htaccess, wp-config, e tutti i settaggi
+3. stilare un bel documento di analisi
+4. trovare le ottimizzazioni da fare sul server (php.ini, eccetera)
+
+
+!!!!!! https://github.com/h5bp/server-configs-apache
+https://gist.github.com/tracend/899305
+10.1 after infection checkup
+11.0 site speed: pingdom http://tools.pingdom.com/fpt/
+11.1 site speed: gtmetrix https://gtmetrix.com/reports/womanlycollections.com/Oqoa0UDq
+11.2 site spees: google page speed (module on server?)
+- https://developers.google.com/speed/pagespeed/module/install
+- https://www.howtoforge.com/community/threads/new-google-mod_pagespeed.49915/
+- -> https://www.digitalocean.com/community/tutorials/how-to-get-started-with-mod_pagespeed-with-apache-on-an-ubuntu-and-debian-cloud-server
+- http://www.faqforge.com/linux/enable-image-caching-in-apache-for-better-google-page-speed-results/
+- http://stackoverflow.com/questions/8939504/how-to-stop-using-google-page-speed
+- http://www.the-art-of-web.com/system/mod-pagespeed-settings/
+
+12.1 hardening ispconfig https://www.google.com/search?q=ispconfig+hardening&oq=ispconfig+hardening&aqs=chrome..69i57.3366j0j9&sourceid=chrome&es_sm=91&ie=UTF-8
+
+=== techniques:
+- multiple dns for single website to load more resources (like multithread requests)
+- (?) check requests (even xhr) are made with Accept-Encoding: gzip,deflate (for compression), then check Content-Encoding is set to gzip in the answer
+- gzip compression ()
+- cache (built-in, plugins)
+- php.ini ([clean up](http://phplens.com/lens/php-book/optimizing-debugging-php.php), )
+- apache ([disable unwanted/unused modules, httpd.conf](http://www.serverwatch.com/tutorials/article.php/3436911), [check LoadModule commands in httpd.conf](https://www.howtoforge.com/configuring_apache_for_maximum_performance), mod_deflate enables compression, mod_expires & mod_headers enables cache for clients, mod_cache is for server side caching, [Use mod_disk_cache NOT mod_mem_cache, Configure mod_disk_cache with a flat hierarchy](http://www.monitis.com/blog/2011/07/05/25-apache-performance-tuning-tips/))
+- Turn HostnameLookups Off – stop doing expensive DNS lookups.  You will rarely ever need them and when you do, you can look them up after the fact.
+- query cache ([tweak it, change the settings](http://www.earnersblog.com/digproof-your-wordpress))
+- check mysql key cache ([should be 1:10, or increase key buffer](http://google.com/ncr))
+- check/tweak mysql thread cache ([it create new thread or forks](http://www.codepoetry.net/archives/2006/03/21/optimizing_a_vps_for_getting_dugg))
+- optimize .htaccess ([If .htaccess is required for a particular directory, then enable it for that directory alone.](https://www.howtoforge.com/configuring_apache_for_maximum_performance), [Setup appropriate Expires, Etag, and Cache-Control Headers](http://www.monitis.com/blog/2011/07/05/25-apache-performance-tuning-tips/))
+- others 01: [For maximum performance, set FollowSymLinks everywhere and never set SymLinksIfOwnerMatch. Or else, if SymLinksIfOwnerMatch is required for a directory, then set it for that directory alone.](https://www.howtoforge.com/configuring_apache_for_maximum_performance)
+- others 02: [turn off content negotiation MultiViews](https://www.howtoforge.com/configuring_apache_for_maximum_performance)
+- others 03: Use Persistent Connections: [KeepAliveTimeout determines how long to wait for the next request. Set this to a low value, perhaps between two to five seconds. If it is set too high, child processed are tied up waiting for the client when they could be used for serving new clients.](https://www.howtoforge.com/configuring_apache_for_maximum_performance), but Do Not set KeepAliveTimeout too high.
+- others 04: [Use a tiny Apache as the front-end server to serve static contents. Request forwarding can be achieved by using mod_proxy and rewrite_module modules. Look at section 5.](https://www.howtoforge.com/configuring_apache_for_maximum_performance)
+- others 04.1: [Light weight servers such as tux , thttpd can also be used as the front-end server.](https://www.howtoforge.com/configuring_apache_for_maximum_performance)
+- others 05: [Use tools like ab and httperf to measure the web server performance.](https://www.howtoforge.com/configuring_apache_for_maximum_performance)
+- others 06: Google this: Wordpress bottleneck analysis
+- others 07: [In case of MySQL, mtop can be used to monitor slow queries.](https://www.howtoforge.com/configuring_apache_for_maximum_performance)
+- others 08: [Performance of PHP scripts can be improved by using a PHP caching product such as Turck MMCache. It eliminates overhead due to compiling by caching the PHP scripts in compiled state.](https://www.howtoforge.com/configuring_apache_for_maximum_performance), will it work with wordpress?
+- others 09: Run periodic security checks such as remote penetration tests, rootkit checks, log audits
+- others 10: Harden your server -- turn off unneeded services, disable root login, secure SSH connections, secure wordpress and mysql
+- others 11: keep server updated (chi aggiorna ispconfig? mysql? ecc?)
+- others 12: enable apache piped logging ([http://www.liquidweb.com/kb/how-and-why-enabling-apaches-piped-logging/](how-to))
+- others 13: Set ExtendedStatus Off - Although very useful, the ExtendedStatus will produce several system calls for each request to gather statistics.  Better to utilize for a set time period in order to benchmark, then turn back off.
+- others 14: On linux systems increase /proc/sys/vm/swappiness to at least 60 if not greater. [OK: 60]
+- others 15: increase, increase, increase.. /proc/sys/net/core/wmem_max, /proc/sys/net/core/wmem_default, /proc/sys/fs/file-max and run ulimit -H -n 4096
+- Turn off safe_mode for php – it will utilize about 50-70% of your script time checking against these safe directives.  Instead configure open_base_dir properly and utilize plugins such as mod_itk.
+- Don’t use threaded mpm with mod_php – look at using mod_itk, mod_php tends to segfault with threaded mpm.
+- Use mod_passenger ???
+- Flush buffers early for pre-render - [it takes a relatively long time to create a web page on the backend, flush your buffer prior to page completion to send a partial page to the client, so it can start rendering.  A good place to do this is right after the HEAD section – so that the browser can start fetching other objects](http://www.sitepoint.com/faster-web-pages-php-buffer-flush/)
+++++ [You should avoid using .htaccess files completely if you have access to httpd main server config file. Using .htaccess files slows down your Apache http server. Any directive that you can include in a .htaccess file is better set in a Directory block, as it will have the same effect with better performance.](http://stackoverflow.com/a/17140717/1160173)
+
+/usr/sbin/apache2 -l
+cd /etc/apache2/mods-enabled
+ln -s ../mods-available/expires.load expires.load
+service apache2 restart
+nano /etc/php5/cgi/php.ini
+cat /etc/apache2/apache2.conf
+cat /var/log/apache2/error.log
+top => rkhunter? tool looking for rootkits on OUR server?
+- Rootkit Hunter 1.4.0
+- /var/log/rkhunter.log
+
+=== already consulted links:
+- http://www.studyweb.com/wordpress-on-speed-17-tweaks-to-accelerate-your-wp/
+
+I numeri non sbagliano mai
+Sei pezzi facili
+Sei pezzi meno facili
+
+FP rotto?
+- file:///Users/mirkolofio/Downloads/Battery%20test_FP1.pdf
+- https://fairphone.zendesk.com/hc/en-us/article_attachments/200592553/Battery_test_FP1.pdf
+- http://forum.xda-developers.com/wiki/Fairphone_Fairphone/Guides
+- http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053
+- http://forum.xda-developers.com/xposed/modules/app-gravitybox-v3-1-4-tweak-box-android-t2316070
+
+
+[Fri Sep 25 15:18:47 2015] [notice] Graceful restart requested, doing restart
+[Fri Sep 25 15:23:43 2015] [notice] Graceful restart requested, doing restart
+[Fri Sep 25 15:24:44 2015] [notice] Graceful restart requested, doing restart
+[Fri Sep 25 17:44:01 2015] [notice] Graceful restart requested, doing restart
+[Fri Sep 25 17:45:08 2015] [notice] Graceful restart requested, doing restart
+=> Non è un restart di apache, è un reload dei file di configurazione.
+=> Quel log lo ottieni con "sudo /etc/init.d/apache2 reload".
+
++ remove apsx support on moses: http://www.ivankristianto.com/howto-run-asp-net-on-linux-with-apache-web-server-mono-mod_mono/ (uninstall all packages installed via apt-get, maybe? they were all new http://askubuntu.com/questions/187888/what-is-the-correct-way-to-completely-remove-an-application)
++ apt-get install libapache2-mod-perl2
++ apt-get install libapache-asp-perl
+=> http://moses.sedweb.it/perl-status

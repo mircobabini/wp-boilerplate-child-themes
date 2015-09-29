@@ -18,5 +18,13 @@ if( defined( 'WP_DEBUG' ) ){
 // globally mark this file as required
 define( 'WPCTB__CONFIG', 1 );
 
-// load utils
+/* place your definitions here or change wpctb-defaults.php */
+// wanna change $table_prefix? uncomment the line below and use: https://wordpress.org/plugins/db-prefix-change/
+// $table_prefix  = 'newprefix_';
+
+// ...
+// ...
+/* */
+
+// load defaults
 require_once( dirname(__FILE__) . '/wpctb-defaults.php' );

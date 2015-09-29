@@ -5,7 +5,7 @@ This is a full-featured child theme boilerplate to start with.
 ## Author
 Mirco Babini <mirkolofio@gmail.com> for [SED Web](http://sedweb.it)
 
-Latest version: v0.1.29-beta
+Latest version: v0.1.30-beta
 
 ## Website
 <http://sedweb.it>
@@ -44,6 +44,7 @@ This configuration already supports: browser caching, gzip compression. We also 
 #### Thanks
 - [_child](https://github.com/ahmadawais/_child)
 - [bones](https://github.com/eddiemachado/bones/)
+- [bueltge/WordPress-Starter](https://github.com/bueltge/WordPress-Starter) 
 - [Acunetix WP Security](https://wordpress.org/plugins/wp-security-scan/) fully integrated
 - [Perishable Press](http://perishablepress.com/)
 - [WPLifeGuard+](http://wplifeguard.com/)

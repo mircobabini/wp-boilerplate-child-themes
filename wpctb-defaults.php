@@ -10,9 +10,12 @@ __define( 'IMAGE_EDIT_OVERWRITE', true);
 /* MEMORY */
 // todo: this should be only for admin area
 // this has to be put before wp-settings.php inclusion
-__define( 'WP_MEMORY_LIMIT',     '256M' );
-__define( 'WP_MAX_MEMORY_LIMIT', '256M' );
-@ini_set( 'memory_limit', WP_MEMORY_LIMIT );
+__define( 'WP_MEMORY_LIMIT',     '128M' ); // 256M
+__define( 'WP_MAX_MEMORY_LIMIT', '128M' ); // 256M
+if( function_exists( 'memory_get_usage' ) &&
+	( (int) @ini_get( 'memory_limit' ) < abs( (int) WP_MEMORY_LIMIT ) ) ){
+			@ini_set( 'memory_limit', WP_MEMORY_LIMIT );
+}
 
 /* DATABASE & FILE SYSTEM */
 // charset/collation of the database
@@ -60,7 +63,7 @@ __define( 'SAVE_QUERIES', WPCTB__DEV );
 // example: define( 'WP_POST_REVISIONS', false );
 __define( 'WP_POST_REVISIONS', WPCTB__DEV ? 20 : 3  ); // int or false
 __define( 'EMPTY_TRASH_DAYS',  WPCTB__DEV ? 0  : 14 ); // 0 = disabled
-__define( 'AUTOSAVE_INTERVAL', WPCTB__DEV ? 10 : 30 ); // secs
+__define( 'AUTOSAVE_INTERVAL', WPCTB__DEV ? 30 : 180 ); // secs
 __define( 'MEDIA_TRASH', false ); // Enables the trash function for Media files
 
 // cache and compression
@@ -95,6 +98,7 @@ __define( 'WP_CRON_LOCK_TIMEOUT', 60 );
 // __define( 'WP_ALLOW_REPAIR', false );
 // __define( 'DO_NOT_UPGRADE_GLOBAL_TABLES', true );
 // print_r( @get_defined_constants() );
+// need to change/replace hard-coded links? https://wordpress.org/plugins/search-regex/
 
 /* FTP */
 // __define( 'FTP_BASE', '/web' );
@@ -105,3 +109,11 @@ __define( 'WP_CRON_LOCK_TIMEOUT', 60 );
 // __define( 'FTP_CONTENT_DIR', FTP_BASE.'/wp-content/' );
 // __define( 'FTP_PLUGIN_DIR ', FTP_BASE.'/wp-content/plugins/' );
 
+/* NO USELESS THINGS, PLEASE */
+__define( 'CORE_UPGRADE_SKIP_NEW_BUNDLED', true );
+
+/* OTHERS */
+// Disallow unfiltered_html for all users, even admins and super admins
+// __define( 'DISALLOW_UNFILTERED_HTML', TRUE );
+// Allow uploads of filtered file types to users with administrator role
+// __define( 'ALLOW_UNFILTERED_UPLOADS', TRUE );

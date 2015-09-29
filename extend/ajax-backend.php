@@ -1,4 +1,5 @@
 <?php
+// SOSTITUISCI TUTTE LE OCCORRENZE DI my_action CON update_scadenza (ad esempio)
 // The JavaScript
 function my_action_javascript() {
 	//Set Your Nonce
@@ -12,7 +13,7 @@ function my_action_javascript() {
 			whatever: 1234
 		};
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-		$.post( ajaxurl, data, function( response)  {
+		$.post( ajaxurl, data, function( response )  {
 			alert( 'Got this from the server: ' + response );
 		});
 	});
