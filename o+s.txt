@@ -1,3 +1,16 @@
+1. ROADMAP .htaccess (scritta all'interno dell'htaccess)
+2. ROADMAP Apache hardening/optimizations
+	- Prepare analysis: tools are "apache2ctl -M", "a2enmod", "a2dismod"
+	- Benchmark with "ab"
+	- Benchmark various demo subdomains
+	- Test/Analyze various speed/cache/security plugins on different demo subdomains
+	- Integrate the new htaccess code
+	- Separate static/dynamic content, ecc... https://www.thomas-krenn.com/en/wiki/Apache_Performance_Tuning
+	=> sottodominio per media https://wordpress.org/plugins/wp-original-media-path/ + https://wordpress.org/support/topic/moving-media-to-subdomain?replies=4
+
++ github updater funziona con bitbucket privati (account dedicato, sola lettura dei repo)
++ si puo' usare come mu-plugin(s) non disinstallabile https://github.com/afragen/github-updater
+
 -2: look at the phpinfo page. differences compared to the old server?
 -1: we found the php.ini, but where's the httpd?
 0. analisi lux https://gist.github.com/LuXDAmore/933943a49de5e3d1eca7

@@ -1,11 +1,10 @@
 # WP Boilerplate for Child Themes
-
 This is a full-featured child theme boilerplate to start with.
 
 ## Author
 Mirco Babini <mirkolofio@gmail.com> for [SED Web](http://sedweb.it)
 
-Latest version: v0.1.30-beta
+Latest version: v0.1.31-beta
 
 ## Website
 <http://sedweb.it>
@@ -21,10 +20,10 @@ Latest version: v0.1.30-beta
 
 This configuration already supports: browser caching, gzip compression. We also suggest the super-simple Autoptimize + WP Super Cache configuration (*). And some tweaks thanks to the build-in wp-thumb/wp-mobile-detect plugins (check the flatsome.lightweight-slideshows.php example).
 
-| Feature       | Provided by    |
-|---------------|----------------|
+| Feature       | Provided by     |
+|---------------|-----------------|
 | Desktop Cache | WP Super Cache (*) |
-| Mobile Cache  | W3 Total Cache |
+| Mobile Cache  | W3 Total Cache  |
 | Minify HTML   | Autoptimize (*) |
 | Minify CSS    | Autoptimize (*) |
 | Combine CSS   | Autoptimize (*) |

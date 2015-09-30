@@ -30,6 +30,11 @@ function wp_debug__( $bool ){
 function wp_debug__log( $bool, $file = null ){
 	@ini_set( 'log_errors', $bool ? 'On' : 'Off' );
 	__define( 'WP_DEBUG_LOG', $bool );
+
+	if( $file === null )
+		$file = dirname(__FILE__).'/wp-content/debug.log';
+
+	@init_set( 'error_log', $file );
 }
 function wp_debug__display( $bool ){
 	@ini_set( 'display_errors', $bool ? 'On' : 'Off' );

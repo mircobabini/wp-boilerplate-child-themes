@@ -1,8 +1,12 @@
-# todo: move everithing into httpd.conf/apache.conf
+# best ideas:
+# 1. use h5bp/dist/.htaccess to configure httpd.conf/apache.conf
+# 2. use this file for lightweight optimizations/hardening if can't edit httpd.conf/apache.conf
+# 3. use this file even for specific wordpress' related optimizations/hardening
+
 # todo: integrate https://github.com/roots/wp-h5bp-htaccess
-# BEGIN BLACKHOLE TRAP FOR BAD BOTS
+# BEGIN Blackhost trap for Bad Bots
 RewriteCond %{REQUEST_URI} ^/blackhole$
-RewriteRule ^(.*) /wp-content/themes/wpctb-name/addons/blackhole/ [R=301,L]
+RewriteRule ^(.*) /wp-content/mu-plugins/blackhole/ [R=301,L]
 # END ---
 
 # http://www.askapache.com/htaccess/htaccess.html

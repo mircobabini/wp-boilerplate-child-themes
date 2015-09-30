@@ -8,9 +8,7 @@ function wpctb__import_parent_style(){
 	wp_enqueue_style( $parent, get_template_directory_uri().'/style.css' );
 	wp_enqueue_style( 'wpctb__style', get_stylesheet_directory_uri().'/style.css', array( $parent ) );
 }
-/* parent style is imported into the child style.css, but */
-/* if you prefer including parent style programmatically: uncomment the line below */
-// add_action( 'wp_enqueue_scripts', 'wpctb__import_parent_style' );
+add_action( 'wp_enqueue_scripts', 'wpctb__import_parent_style' );
 
 function wpctb__register_assets(){
 	// list of already available scripts in wordpress
