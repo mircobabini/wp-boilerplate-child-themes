@@ -1,4 +1,5 @@
 <?php
+// customization
 
 /* custom favicon */
 function wpctb__favicon(){

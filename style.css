@@ -1,12 +1,12 @@
 /*
-	Theme Name:   Theme CURRENT_YEAR
+	Theme Name:   ChildPress Contarini 2015
 	Theme URI:    http://sedweb.it
-	Description:  Copyright © CURRENT_YEAR
+	Description:  Copyright © 2015
 	Author:       SED Web
 	Author URI:   http://sedweb.it
-	Template:     parent
+	Template:     twentyfifteen
 	Version:      1.0.0
-	WPCTBv.:      0.1.31-beta
+	WPCTBv.:      0.1.33-beta
 	Text Domain:  sedweb
 
 	Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
@@ -14,7 +14,7 @@
 
 /* the new best-practice is enqueueing the parent's style.css */
 /* by wp_enqueue_style in your child theme's functions.php */
-/*@import url("../parent/style.css");*/
+/* the old way: @import url("../parent/style.css"); */
 
 /* don't write css here. use the assets folder instead. */
 /* this boilerplate uses the mobile-first approach for css. */
