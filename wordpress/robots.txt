@@ -1,24 +1,6 @@
 # www.robotstxt.org/
 # https://developers.google.com/webmasters/control-crawl-index/
 
-# Google Image
-User-agent: Googlebot-Image
-Disallow:
-Allow: /*
-
-# Google AdSense
-User-agent: Mediapartners-Google*
-Disallow:
-Allow: /*
-
-# Internet Archiver Wayback Machine
-User-agent: ia_archiver
-Disallow: /
-
-# digg mirror
-User-agent: duggmirror
-Disallow: /
-
 # globals
 User-agent: *
 Disallow: /cgi-bin
@@ -43,3 +25,22 @@ Allow: /wp-content/uploads
 noindex: /wp-admin/
 noindex: /wp-includes/
 noindex: /wp-content/plugins/revslider/
+
+# Google Image
+User-agent: Googlebot-Image
+Disallow:
+Allow: /*
+
+# Google AdSense
+User-agent: Mediapartners-Google*
+Disallow:
+Allow: /*
+
+# Internet Archiver Wayback Machine
+User-agent: ia_archiver
+Disallow: /
+
+# digg mirror
+User-agent: duggmirror
+Disallow: /
+

@@ -1,27 +1,4 @@
 <?php
-// test with: https://wordpress.org/plugins/debug-bar/
-// test with: https://wordpress.org/plugins/debug-objects/
-// test with: https://wordpress.org/plugins/query-monitor/
-// test with: https://wordpress.org/plugins/askapache-debug-viewer/
-// test: https://wordpress.org/plugins/check-email/
-// clean up: https://wordpress.org/plugins/wp-optimize/
-// performance test: https://wordpress.org/plugins/p3-profiler/
-// performance improve: https://wordpress.org/plugins/wp-dbmanager/
-// performance improve: https://wordpress.org/plugins/bj-lazy-load/
-// performance improve: https://wordpress.org/plugins/revision-control/
-// check this cache plugin: https://wordpress.org/plugins/aio-cache/
-// integrate: https://wordpress.org/plugins/wp-performance-security/
-// integrate: https://wordpress.org/plugins/wp-performance-score-booster/
-// test: https://wordpress.org/plugins/google-pagespeed-insights/
-// integrate: https://wordpress.org/plugins/wp-http-compression/
-// check trick 10 (performance improve): https://www.wphub.com/wordpress-snippets-wp-config/
-// integrate on our own mainwp install: https://www.rackaid.com/blog/wordpress-brute-force/
-// check suhosin?: http://stackoverflow.com/questions/3383916/how-to-check-whether-suhosin-is-installed
-// integrate: from 9 to bottom http://wpsecure.net/secure-wordpress-advanced/
-// file integrity: https://wordpress.org/plugins/sucuri-scanner/
-// file integrity: https://wordpress.org/plugins/wordfence/
-// file integrity: https://wordpress.org/plugins/wordpress-file-monitor-plus/
-
 // todo with plugins / default clone:
 // - wp_ to something different
 // - 1|admin to 42|itsedweb

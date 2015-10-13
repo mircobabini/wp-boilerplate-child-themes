@@ -1,3 +1,39 @@
+// in fondo suggerikmenti https://developers.google.com/speed/pagespeed/?hl=en
+// test with: https://wordpress.org/plugins/debug-bar/
+// test with: https://wordpress.org/plugins/debug-objects/
+// test with: https://wordpress.org/plugins/query-monitor/
+// test with: https://wordpress.org/plugins/askapache-debug-viewer/
+// test: https://wordpress.org/plugins/check-email/
+// clean up: https://wordpress.org/plugins/wp-optimize/
+// performance test: https://wordpress.org/plugins/p3-profiler/
+// performance improve: https://wordpress.org/plugins/wp-dbmanager/
+// performance improve: https://wordpress.org/plugins/bj-lazy-load/
+// performance improve: https://wordpress.org/plugins/revision-control/
+// check this cache plugin: https://wordpress.org/plugins/aio-cache/
+// integrate: https://wordpress.org/plugins/wp-performance-security/
+// integrate: https://wordpress.org/plugins/wp-performance-score-booster/
+// test: https://wordpress.org/plugins/google-pagespeed-insights/
+// integrate: https://wordpress.org/plugins/wp-http-compression/
+// check trick 10 (performance improve): https://www.wphub.com/wordpress-snippets-wp-config/
+// integrate on our own mainwp install: https://www.rackaid.com/blog/wordpress-brute-force/
+// check suhosin?: http://stackoverflow.com/questions/3383916/how-to-check-whether-suhosin-is-installed
+// integrate: from 9 to bottom http://wpsecure.net/secure-wordpress-advanced/
+// file integrity: https://wordpress.org/plugins/sucuri-scanner/
+// file integrity: https://wordpress.org/plugins/wordfence/
+// file integrity: https://wordpress.org/plugins/wordpress-file-monitor-plus/
+
+apache mod_pagespeed: https://developers.google.com/speed/pagespeed/module/configuration
+!!! https://github.com/roots/bedrock
+
+recommendations:
+- memory limit: 64mb (min), 128mb (ml/ecomm), 256mb (ml+ecomm)
+
++ consider integration: https://github.com/mattbanks/Genesis-Starter-Child-Theme/tree/master/lib (default plugins activation setup)
+
+test plugins:
+- CDN swarmify (free)
+- CDN/security incapsula (free)
+
 1. ROADMAP .htaccess (scritta all'interno dell'htaccess)
 2. ROADMAP Apache hardening/optimizations
 	- Prepare analysis: tools are "apache2ctl -M", "a2enmod", "a2dismod"
@@ -107,3 +143,64 @@ FP rotto?
 + apt-get install libapache2-mod-perl2
 + apt-get install libapache-asp-perl
 => http://moses.sedweb.it/perl-status
+
+++: pannellino come buddypress components per attivare/disattivare le components/addons di childpress (anzitutto gli addons)
+
+https://www.thomas-krenn.com/en/wiki/Apache_Performance_Tuning
+http://tweaked.io/guide/apache2/
+http://www.debianhelp.co.uk/apacheperformance.htm
+https://www.digitalocean.com/community/tutorials/how-to-optimize-apache-web-server-performance
+https://www.linode.com/docs/websites/apache-tips-and-tricks/tuning-your-apache-server
+http://wiki.mikejung.biz/WordPress_Optimization
+https://kb.asmallorange.com/customer/portal/articles/1603150-all-about-our-wordpress-optimized-lemp?b_id=4859
+http://civicrm.stackexchange.com/questions/2347/civicrm-wordpress-optimization
+https://seravo.fi/2013/optimizing-web-server-performance-with-nginx-and-php
+http://publishingwithwordpress.com/wordpress-performance-optimization/
+https://managewp.com/boost-wordpress-performance-zend-optimizer
+http://gregrickaby.com/the-perfect-apc-configuration/
+https://99robots.com/how-to-speed-up-wordpress/
+http://www.markdescande.com/wordpress-site-speed-optimization-case-study-on-lowerbloodpressuredrugfree-com/
+http://elliottback.com/wp/why-my-wordpress-site-is-so-much-faster-than-yours/
+http://code.tutsplus.com/articles/the-ultimate-quickstart-guide-to-speeding-up-your-wordpress-site--wp-23846
+
+http://code.tutsplus.com/tutorials/optimizing-wordpress-loading-speed-with-headerphp-htaccess--wp-25279
+http://top-frog.com/2010/03/31/everything-i-know-about-optimizing-a-wordpress-install/
+http://codex.wordpress.org/User:Warwickp/WordPress_Hosting_COnfiguration_and_Optimization_Guide
+http://madebyhoundstooth.com/blog/advanced-wordpress-performance-optimization/
+http://www.prelovac.com/vladimir/wordpress-optimization-guide/
+http://www.ravenousravendesign.com/wordpress/speed-up-your-wordpress-website-without-plugins/
+https://www.prestashop.com/blog/en/php-ini-file/
+http://stackoverflow.com/questions/17944698/best-php-ini-settings-to-improve-security
+http://www.himpfen.com/htaccess-wordpress/
+https://helgeklein.com/blog/2014/08/beautifully-fast-wordpress-webserver/
+http://reviewsignal.com/blog/2014/06/25/40-million-hits-a-day-on-wordpress-using-a-10-vps/
+http://blog.phpdeveloper.org/2013/11/09/iniscan-a-security-scanner-for-php-ini/
+http://siddou.mynetgear.com/2013/06/hardening-wordpress-security/
+http://wpsecurity.securemoz.com/hardening-php/
+http://sitexposure.net/b/Hardening-WordPress-Security-Secure-Access-to-htaccess-wp-config.php-PHP.ini/bid/1000003/seqid/7
+http://blog.sec-consult.com/2013/05/secure-wordpress-part-2-configuration.html
+http://www.cyberciti.biz/tips/php-security-best-practices-tutorial.html
+http://www.madirish.net/199
+http://security.stackexchange.com/questions/7083/php-ini-security-setting-after-attack
+http://server.wpcop.com/network-defense/php-security-wordpress-server/
+http://www.brianhaddock.com/2010/hardening-wordpress-security
+http://www.securityninja.co.uk/wp-content/uploads/2014/07/Hardening_Wordpress.pdf
+https://mediatemple.net/community/products/dv/204403734/php-safe-mode-problems-and-workarounds
+https://kinsta.com/blog/wordpress-security-plugin-review-best-free-paid-security-plugins/
+https://tournasdimitrios1.wordpress.com/2010/11/09/what-is-register_globals-and-why-is-it-a-security-risk/
+http://www.slideshare.net/pbaylies/word-press-server-security
+http://www.acunetix.com/websitesecurity/php-security-5/
+https://ithemes.com/custom_php_ini/
+http://affiliates.ait-pro.com/po/
+http://www.cyberciti.biz/faq/linux-unix-apache-lighttpd-phpini-disable-functions/
+http://security.stackexchange.com/questions/563/what-are-the-best-practices-for-hardening-a-php-ini-file
+https://www.safaribooksonline.com/library/view/wordpress-3-ultimate/9781849512107/ch10s03.html
+http://www.trickspanda.com/category/htaccess/
+http://directadminguru.com/finding-a-spammer/
+https://newcodepoet.files.wordpress.com/2012/07/lockingdownwordpress1-1.pdf
+https://gtmetrix.com/reports/womanlycollections.com/Oqoa0UDq
+
+http://blog.schaal-24.de/ispconfig/ispconfig-dkim-patch/?lang=en#install
+http://blog.schaal-24.de/ispconfig/ispconfig-apache-durch-nginx-ersetzen/?lang=en
++ php7
++ apache2 enhancements

@@ -109,28 +109,3 @@ add_action( 'init', function(){
 /** This will allow you to edit the scriptname.dev.js files in the wp-includes/js and wp-admin/js directories.  */
 !defined('SCRIPT_DEBUG') && define('SCRIPT_DEBUG', WP_DEBUG);
 
-
-function wpctb__on_activate(){
-	wpctb__on_checkup();
-
-	// create the checkup cron
-}
-function wpctb__on_deactivate(){
-	// delete the checkup cron
-}
-add_action( 'after_switch_theme', 'wpctb__on_activate' );
-add_action( 'switch_theme', 'wpctb__on_deactivate' );
-
-function wpctb__on_checkup(){
-	// @ http://wpsecure.net/secure-wordpress/
-	wpctb__file_secure( ABSPATH.'/wp-config.php', 0600 );
-	// thank you Acunetix
-	wpctb__file_secure( ABSPATH.'/wp-admin/install.php', 0000 );
-	wpctb__file_secure( ABSPATH.'/wp-admin/upgrade.php', 0000 );
-	wpctb__file_secure( ABSPATH.'/wp-admin/.htaccess', 0644, "Order deny,allow\nDeny from all" );
-	wpctb__file_secure( ABSPATH.'/wp-config/debug.log', 0000 );
-	wpctb__file_silence( WP_CONTENT_DIR.'/index.php' );
-	wpctb__file_silence( WP_CONTENT_DIR.'/plugins/index.php' );
-	wpctb__file_silence( WP_CONTENT_DIR.'/themes/index.php' );
-	wpctb__file_silence( WP_CONTENT_DIR.'/uploads/index.php' );
-}

@@ -36,15 +36,6 @@ function bones_filter_ptags_on_images($content){
 	return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
 
-// custom excerpt-more
-/*
-function wpctb__excerpt_more( $text ){
-	// $text = 'whatever';
-	return $text;
-}
-add_filter( 'excerpt_more', 'wpctb__excerpt_more' );
-*/
-
 // needs tests
 
 // hide hard urls, use relative ones

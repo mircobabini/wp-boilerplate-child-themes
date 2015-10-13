@@ -11,8 +11,17 @@ if( ! is_admin() ){
 
 /* BACK END ONLY */
 if( is_admin() ){
-}
+	// Allow SVG Images Via Media Uploader
+	add_filter( 'upload_mimes', function($mimetypes){
+		$mimetypes['svg'] = 'image/svg+xml';
+		return $mimetypes;
+	} );
 
+	// Filter Yoast SEO Metabox Priority
+	add_filter( 'wpseo_metabox_prio', function(){
+		return WPCTB__DEV ? 'high' : 'low';
+	} );
+}
 
 /* FRONT & BACK END */
 {

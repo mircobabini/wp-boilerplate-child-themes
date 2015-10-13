@@ -57,3 +57,20 @@ function bones_remove_wp_ver_css_js( $src ) {
 		$src = remove_query_arg( 'ver', $src );
 	return $src;
 }
+
+/* secure files on theme activation */
+function wpctb__on_checkup(){
+    // @ http://wpsecure.net/secure-wordpress/
+    wpctb__file_secure( ABSPATH.'/wp-config.php', 0600 );
+    // thank you Acunetix
+    wpctb__file_secure( ABSPATH.'/wp-admin/install.php', 0000 );
+    wpctb__file_secure( ABSPATH.'/wp-admin/upgrade.php', 0000 );
+    wpctb__file_secure( ABSPATH.'/wp-admin/.htaccess', 0644, "Order deny,allow\nDeny from all" );
+    wpctb__file_secure( ABSPATH.'/wp-config/debug.log', 0000 );
+    wpctb__file_silence( WP_CONTENT_DIR.'/index.php' );
+    wpctb__file_silence( WP_CONTENT_DIR.'/plugins/index.php' );
+    wpctb__file_silence( WP_CONTENT_DIR.'/themes/index.php' );
+    wpctb__file_silence( WP_CONTENT_DIR.'/uploads/index.php' );
+}
+add_action( 'after_switch_theme', 'wpctb__on_checkup' );
+
